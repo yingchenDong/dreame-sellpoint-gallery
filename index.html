@@ -1,0 +1,1089 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>扫地机 BU · 彩箱卖点图渲染验收标准 · 参考图库</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0c;--panel:#121216;--panel2:#17171d;--gold:#c9a45c;--gold2:#e6c98a;--text:#e8e6e1;--muted:#9a968d;--line:rgba(201,164,92,.18)}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1200px;margin:0 auto;padding:0 28px}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,12,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;height:64px;gap:34px}
+nav .brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:2px}
+nav .brand img{height:22px;width:auto}
+nav .brand span{font-size:13px;color:var(--gold);letter-spacing:3px}
+nav .links{display:flex;gap:26px;margin-left:auto}
+nav .links a{font-size:14px;color:var(--muted);transition:color .25s}
+nav .links a:hover{color:var(--gold2)}
+
+/* Hero */
+header.hero{padding:150px 0 90px;position:relative;overflow:hidden;background:radial-gradient(ellipse at 70% 20%,rgba(201,164,92,.14),transparent 55%),radial-gradient(ellipse at 20% 80%,rgba(201,164,92,.06),transparent 50%)}
+header.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.5}
+.hero .logo{height:52px;width:auto;margin-bottom:34px;filter:drop-shadow(0 0 22px rgba(201,164,92,.35))}
+.hero h1{font-size:44px;font-weight:800;letter-spacing:2px;line-height:1.25}
+.hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--gold),var(--gold2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .sub{margin-top:20px;color:var(--muted);font-size:16px;max-width:680px}
+.hero .tags{margin-top:30px;display:flex;flex-wrap:wrap;gap:10px}
+.hero .tags span{font-size:12px;letter-spacing:1px;color:var(--gold);border:1px solid var(--line);padding:6px 14px;border-radius:100px}
+
+/* Section */
+section{padding:84px 0}
+section .sec-head{margin-bottom:44px}
+section .sec-head .en{font-size:12px;letter-spacing:4px;color:var(--gold);text-transform:uppercase}
+section .sec-head h2{font-size:30px;font-weight:800;margin-top:8px;letter-spacing:1px}
+section .sec-head p{margin-top:10px;color:var(--muted);font-size:14px;max-width:760px}
+
+/* Standards */
+.standards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:30px 28px;transition:transform .3s,border-color .3s}
+.card:hover{transform:translateY(-4px);border-color:rgba(201,164,92,.4)}
+.card .no{font-size:12px;color:var(--gold);letter-spacing:2px}
+.card h3{font-size:20px;margin:10px 0 4px;font-weight:700}
+.card .kw{font-size:13px;color:var(--gold2);margin-bottom:16px}
+.card ul{list-style:none}
+.card li{font-size:13.5px;color:var(--muted);padding:8px 0 8px 20px;position:relative;border-bottom:1px dashed rgba(255,255,255,.05)}
+.card li:last-child{border-bottom:none}
+.card li::before{content:"";position:absolute;left:0;top:16px;width:6px;height:6px;background:var(--gold);border-radius:50%;opacity:.7}
+
+/* Categories */
+.cats{display:flex;flex-wrap:wrap;gap:12px}
+.cats .cat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 20px;min-width:150px}
+.cats .cat b{font-size:15px;color:var(--gold2)}
+.cats .cat span{display:block;font-size:12px;color:var(--muted);margin-top:4px}
+
+/* Sellpoints */
+.sell-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.sp{background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .3s,border-color .3s}
+.sp:hover{transform:translateY(-4px);border-color:rgba(201,164,92,.4)}
+.sp .sp-head{padding:22px 26px 12px;display:flex;align-items:flex-start;gap:14px}
+.sp .sp-idx{font-size:12px;color:var(--gold);border:1px solid var(--line);border-radius:8px;padding:3px 9px;white-space:nowrap;font-weight:600}
+.sp h3{font-size:19px;font-weight:700;line-height:1.35}
+.sp .sp-sub{font-size:13px;color:var(--gold2);margin-top:3px}
+.sp .sp-body{padding:4px 26px 20px;flex:1}
+.sp ul{list-style:none}
+.sp li{font-size:13.5px;color:var(--muted);padding:7px 0 7px 18px;position:relative}
+.sp li::before{content:"";position:absolute;left:0;top:14px;width:5px;height:5px;background:var(--gold);border-radius:50%;opacity:.7}
+.sp .sp-imgs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:14px 26px 24px;background:rgba(255,255,255,.015);border-top:1px solid rgba(255,255,255,.04)}
+.sp .sp-imgs .thumb{position:relative;border-radius:10px;overflow:hidden;cursor:zoom-in;aspect-ratio:1/1;background:#000;border:1px solid rgba(255,255,255,.06)}
+.sp .sp-imgs .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .35s}
+.sp .sp-imgs .thumb:hover img{transform:scale(1.07)}
+.sp .sp-imgs .thumb .badge{position:absolute;top:8px;left:8px;font-size:10px;letter-spacing:1px;padding:3px 8px;border-radius:100px;z-index:2}
+.sp .sp-imgs .thumb .badge.key{background:linear-gradient(120deg,#8a6a2f,#c9a45c);color:#14100a;font-weight:700}
+.sp .sp-imgs .thumb .badge.opt{background:rgba(255,255,255,.12);color:#ddd}
+.sp .sp-imgs .thumb:nth-child(n+4){display:none}
+
+/* Gallery */
+.gallery-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.g-thumb{border-radius:10px;overflow:hidden;cursor:zoom-in;aspect-ratio:1/1;background:#000;border:1px solid rgba(255,255,255,.06);position:relative}
+.g-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .35s}
+.g-thumb:hover img{transform:scale(1.08)}
+.grp{margin-bottom:40px}
+.grp h4{font-size:15px;color:var(--gold2);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.grp h4::before{content:"";width:20px;height:1px;background:var(--gold)}
+
+/* Lightbox */
+.lb{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;flex-direction:column;padding:30px}
+.lb.open{display:flex}
+.lb img{max-width:92vw;max-height:82vh;border-radius:8px;box-shadow:0 20px 80px rgba(0,0,0,.8)}
+.lb .cap{margin-top:16px;color:var(--muted);font-size:13px;letter-spacing:1px}
+.lb .close{position:absolute;top:22px;right:30px;font-size:30px;color:#ccc;cursor:pointer;background:none;border:none}
+.lb .nav-btn{position:absolute;top:50%;transform:translateY(-50%);font-size:34px;color:#ccc;cursor:pointer;background:none;border:none;padding:16px}
+.lb .nav-btn.prev{left:14px}
+.lb .nav-btn.next{right:14px}
+
+/* Reveal */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s,transform .7s}
+.reveal.in{opacity:1;transform:none}
+
+footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:var(--muted);font-size:13px}
+
+@media (max-width:900px){
+  .standards{grid-template-columns:1fr}
+  .sell-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:repeat(3,1fr)}
+  .hero h1{font-size:32px}
+  nav .links{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand"><img src="ref_assets/logo_dreame_gold.png" alt="DREAME"><span>DREAME</span></div>
+    <div class="links">
+      <a href="#standard">核心标准</a>
+      <a href="#category">细分类别</a>
+      <a href="#sellpoint">卖点参考</a>
+      <a href="#gallery">标杆图库</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <img class="logo" src="ref_assets/logo_dreame_gold.png" alt="DREAME">
+    <h1>扫地机 BU · 彩箱<em>卖点图渲染验收标准</em></h1>
+    <p class="sub">本页面向渲染与设计团队，汇集卖点图渲染的验收细则与全部参考图。点击任意图片可放大查看；每个卖点左侧第一张为<b style="color:var(--gold2)">重点参考图</b>，其余为可选参考。</p>
+    <div class="tags">
+      <span>环境清晰度与细节</span><span>产品质感</span><span>光影</span><span>卖点参考图</span>
+    </div>
+  </div>
+</header>
+
+<section id="standard">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="en">Standard</div>
+      <h2>核心验收标准</h2>
+      <p>三大维度共 13 项细则，作为所有卖点图的验收基线。</p>
+    </div>
+    <div class="standards">
+
+
+      <div class="card reveal">
+        <div class="no">01</div>
+        <h3>环境清晰度与细节</h3>
+        <div class="kw">核心关键词：细节高清</div>
+        <ul><li>纹理：机身纹理（磨砂颗粒、拉丝、碳纤维纹路）放大后是否边缘锐利，纹理根根分明，不糊不马赛克；</li><li>毛发：滚刷/边刷的刷毛是否单根可辨，抹布纤维是否经纬可见；</li><li>材质：地面材质（木纹/地毯/瓷砖）高清自然，接近真实场景；</li><li>丝印：产品Logo、文字标识清晰可读，且渐变自然；</li></ul>
+      </div>
+
+
+      <div class="card reveal">
+        <div class="no">02</div>
+        <h3>产品质感</h3>
+        <div class="kw">核心关键词：金属质感</div>
+        <ul><li>金属质感：需要有环境倒影、环境光、倒角高光锐利、拉丝纹理连续；</li><li>塑料质感：哑光/亮光区分清楚，反光柔和自然，不能像廉价玩具；</li><li>阴影真实度：机器不能漂浮在地面，阴影从底部向外渐淡、边缘适当模糊；</li><li>整体融合度：产品和背景的光影方向一致，像“长”在场景里；</li></ul>
+      </div>
+
+
+      <div class="card reveal">
+        <div class="no">03</div>
+        <h3>光影</h3>
+        <div class="kw">核心关键词：光感细腻 接近真实</div>
+        <ul><li>打光：主光源+辅助光源，产品光影过渡自然，细节经得起看；</li><li>高光：不能过度曝光导致纹理丢失，高光边缘柔和过渡；</li><li>明暗过渡：从亮到暗的转折平滑，中间调丰富；</li><li>阴影柔和度：阴影边缘不能锐利得像刀切（不行），需要有过渡，自然渐淡；</li><li>整体明暗：图片整体不能偏暗（显得压抑）或偏亮（显得曝光），需要处在一个舒适的亮度区间；</li></ul>
+      </div>
+
+
+    </div>
+  </div>
+</section>
+
+<section id="category" style="background:var(--panel)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="en">Category</div>
+      <h2>细分类别</h2>
+      <p>参考图按场景与部件细分，便于按需检索。</p>
+    </div>
+    <div class="cats">
+
+<div class="cat reveal"><b>毛发碎屑</b><span>应用场景：地毯、地面、与滚刷结合表达卖点</span></div>
+<div class="cat reveal"><b>液体脏污</b><span>应用场景：拖地（脏咖啡、脏水、脏酱油）</span></div>
+<div class="cat reveal"><b>宠物</b><span>应用场景：人、宠物、机器互动</span></div>
+<div class="cat reveal"><b>地毯</b><span>应用场景：抬升、吸力；长、中、短毛地毯</span></div>
+<div class="cat reveal"><b>机身</b><span>主机</span></div>
+<div class="cat reveal"><b>双圆盘</b><span>滚筒履带</span></div>
+<div class="cat reveal"><b>滚刷</b><span>边刷</span></div>
+<div class="cat reveal"><b>全能基站透显</b><span>机器光影、环境光影</span></div>
+<div class="cat reveal"><b>投影</b><span>基站主机、主机</span></div>
+<div class="cat reveal"><b>激光扫描</b><span>场景光效、场景参考、拖地光效</span></div>
+
+    </div>
+  </div>
+</section>
+
+<section id="sellpoint">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="en">Sell Points</div>
+      <h2>卖点参考（核心）</h2>
+      <p>从卖点表格第 20 行起、纵向至 F 列的全部卖点，完整保留文案与参考图。每行左侧第一张为<b style="color:var(--gold2)">重点参考图</b>，其余供设计师按需选择。</p>
+    </div>
+    <div class="sell-grid">
+
+
+      <div class="sp reveal">
+        <div class="sp-head">
+          <div class="sp-idx">01</div>
+          <div>
+            <h3>蒸汽拖地</h3>
+            <div class="sp-sub">气体效果真实、产品结构清晰</div>
+          </div>
+        </div>
+        <div class="sp-body"><ul><li>1、蒸汽：气体有虚实处理，不要太浓烈，参考图5、图6的气体效果</li><li>2、光影：暗背景聚焦打亮产品，借助明暗对比凸显机身与水汽的层次质感</li><li>3、动态：制作蒸汽喷出、刷毛转动这类动态特效，直观呈现清洁作业状态</li><li>4、构图：主推采用低斜侧机位拍摄，以居家实景为主、纯色特效为辅来突出产品</li><li>5、材质：写实还原哑光机身、蓬松刷毛、通透水雾等不同物料的质感差异</li></ul></div>
+        <div class="sp-imgs">
+          <div class="thumb reveal"><span class="badge key">重点参考图</span><img src="ref_assets/embedded/emb_p030_x96.jpg" loading="lazy" alt="蒸汽拖地"></div>
+        </div>
+      </div>
+
+
+      <div class="sp reveal">
+        <div class="sp-head">
+          <div class="sp-idx">02</div>
+          <div>
+            <h3>双极致外扩</h3>
+            <div class="sp-sub">机械臂伸展功能清晰</div>
+          </div>
+        </div>
+        <div class="sp-body"><ul><li>1、清扫场景：呈现灰尘毛发，直观体现实际清扫作用</li><li>2、角度：渲染边刷转动、机械臂外伸，清晰展示外扩动态</li><li>3、材质：写实区分各部件质感，（金属装饰件、硬质刷毛、哑光地砖）保证结构材质边界清晰</li></ul></div>
+        <div class="sp-imgs">
+          <div class="thumb reveal"><span class="badge key">重点参考图</span><img src="ref_assets/embedded/emb_p030_x99.jpg" loading="lazy" alt="双极致外扩"></div>
+<div class="thumb reveal"><span class="badge opt">可选参考图</span><img src="ref_assets/embedded/emb_p030_x100.jpg" loading="lazy" alt="双极致外扩"></div>
+        </div>
+      </div>
+
+
+      <div class="sp reveal">
+        <div class="sp-head">
+          <div class="sp-idx">03</div>
+          <div>
+            <h3>热水拖地</h3>
+            <div class="sp-sub">热水颜色、抹布清洁能力表现</div>
+          </div>
+        </div>
+        <div class="sp-body"><ul><li>1、场景：局部布置污渍地面（视情况定），直观展示热水拖地清洁场景</li><li>2、光影：侧位纵深柔光，暖橙金烘托热气，层次分明光影统一</li><li>3、动态：渲染滚刷、热水、热气、污渍溶解动态，特效贴合作业逻辑</li></ul></div>
+        <div class="sp-imgs">
+          <div class="thumb reveal"><span class="badge key">重点参考图</span><img src="ref_assets/embedded/emb_p031_x100.jpg" loading="lazy" alt="热水拖地"></div>
+        </div>
+      </div>
+
+
+      <div class="sp reveal">
+        <div class="sp-head">
+          <div class="sp-idx">04</div>
+          <div>
+            <h3>抹布抬升</h3>
+            <div class="sp-sub">注意体现抹布和地面的距离</div>
+          </div>
+        </div>
+        <div class="sp-body"><ul><li>1、根据卖点需求在参考图中选择机器的角度。</li><li>2、抹布抬升视角明显，可清晰看到抹布与地面距离</li><li>3、内部结构明显，凸显产品表现卖点的结构虚实以及用光影突出结构</li><li>4、地毯、拖布毛肌理质感明显，可明显感受到毛茸茸的效果。</li></ul></div>
+        <div class="sp-imgs">
+          <div class="thumb reveal"><span class="badge key">重点参考图</span><img src="ref_assets/embedded/emb_p031_x103.jpg" loading="lazy" alt="抹布抬升"></div>
+        </div>
+      </div>
+
+
+      <div class="sp reveal">
+        <div class="sp-head">
+          <div class="sp-idx">05</div>
+          <div>
+            <h3>机械臂</h3>
+            
+          </div>
+        </div>
+        <div class="sp-body"><ul><li>1、场景表现：还原真实居家环境，体现解决实际家务问题</li><li>2、画面构图：兼顾机械臂与机身，构图美观并做好视觉引导</li></ul></div>
+        <div class="sp-imgs">
+          <div class="thumb reveal"><span class="badge key">重点参考图</span><img src="ref_assets/embedded/emb_p031_x104.jpg" loading="lazy" alt="机械臂"></div>
+<div class="thumb reveal"><span class="badge opt">可选参考图</span><img src="ref_assets/embedded/emb_p031_x105.jpg" loading="lazy" alt="机械臂"></div>
+        </div>
+      </div>
+
+
+      <div class="sp reveal">
+        <div class="sp-head">
+          <div class="sp-idx">06</div>
+          <div>
+            <h3>热水洗</h3>
+            <div class="sp-sub">核心关键词：直观清晰</div>
+          </div>
+        </div>
+        <div class="sp-body"><ul><li>1、质感：水肌理、蒸汽特效真实自然</li><li>2、颜色：整体色调参考图 3</li><li>3、抹布：厚实吸水质感明确可辨</li></ul></div>
+        <div class="sp-imgs">
+          <div class="thumb reveal"><span class="badge key">重点参考图</span><img src="ref_assets/embedded/emb_p032_x105.jpg" loading="lazy" alt="热水洗"></div>
+        </div>
+      </div>
+
+
+      <div class="sp reveal">
+        <div class="sp-head">
+          <div class="sp-idx">07</div>
+          <div>
+            <h3>吸力</h3>
+            
+          </div>
+        </div>
+        <div class="sp-body"><ul><li>1、真实脏污：重点呈现毛发，兼顾科技美学</li><li>2、主图效果：优先强化视觉冲击力</li><li>3、核心表达：突出 “吸力大” 的强清洁能力</li></ul></div>
+        <div class="sp-imgs">
+          <div class="thumb reveal"><span class="badge key">重点参考图</span><img src="ref_assets/embedded/emb_p032_x108.jpg" loading="lazy" alt="吸力"></div>
+        </div>
+      </div>
+
+
+      <div class="sp reveal">
+        <div class="sp-head">
+          <div class="sp-idx">08</div>
+          <div>
+            <h3>拖地</h3>
+            <div class="sp-sub">重点表现拖地的效果</div>
+          </div>
+        </div>
+        <div class="sp-body"><ul><li>1、场景搭建：放置扫地机在生活真实家庭环境（视产品经理意见而定）</li><li>2、拖地结构参考右图：活水、下压拖地分别参考图 2、3，质感参考图 1</li><li>3、特效辅助：酌情选用特效，辅助功能演示说明</li></ul></div>
+        <div class="sp-imgs">
+          <div class="thumb reveal"><span class="badge key">重点参考图</span><img src="ref_assets/embedded/emb_p032_x109.jpg" loading="lazy" alt="拖地"></div>
+        </div>
+      </div>
+
+
+      <div class="sp reveal">
+        <div class="sp-head">
+          <div class="sp-idx">09</div>
+          <div>
+            <h3>越障</h3>
+            <div class="sp-sub">重点在于表达越障的高度</div>
+          </div>
+        </div>
+        <div class="sp-body"><ul><li>1、空间选取角度：采用蚂蚁低视角，强视觉冲击，参考图 5</li><li>2、真实生活场景融入：参考图 1，远景拉开聚焦产品主体</li><li>3、画面表现与辅助特效：选用适配特效，直观展示功能卖点</li></ul></div>
+        <div class="sp-imgs">
+          <div class="thumb reveal"><span class="badge key">重点参考图</span><img src="ref_assets/embedded/emb_p032_x110.jpg" loading="lazy" alt="越障"></div>
+<div class="thumb reveal"><span class="badge opt">可选参考图</span><img src="ref_assets/embedded/emb_p032_x111.jpg" loading="lazy" alt="越障"></div>
+        </div>
+      </div>
+
+
+      <div class="sp reveal">
+        <div class="sp-head">
+          <div class="sp-idx">10</div>
+          <div>
+            <h3>低矮空间 / 低矮空间物品识别 / lds下降</h3>
+            <div class="sp-sub">重点在于表现机身的超薄特征</div>
+          </div>
+        </div>
+        <div class="sp-body"><ul><li>1、空间选取角度：矮柜沙发底取景，平视 / 俯视，高度贴合机身参数</li><li>2、场景环境营造：简约居家布置，借鉴图 4 横线分割强化低矮视觉</li><li>3、画面表现与辅助特效：添加高度标注特效，凸显机身超薄优势</li></ul></div>
+        <div class="sp-imgs">
+          <div class="thumb reveal"><span class="badge key">重点参考图</span><img src="ref_assets/embedded/emb_p033_x111.jpg" loading="lazy" alt="低矮空间 / 低矮空间物品识别 / lds下降"></div>
+        </div>
+      </div>
+
+
+      <div class="sp reveal">
+        <div class="sp-head">
+          <div class="sp-idx">11</div>
+          <div>
+            <h3>边角清洁</h3>
+            
+          </div>
+        </div>
+        <div class="sp-body"><ul><li>1、边角的选取角度：展示机器贴墙边角姿态，参考右侧按需选拍摄角度</li><li>2、真实生活场景的融入：搭建真实居家环境，呈现贴边清洁效果</li></ul></div>
+        <div class="sp-imgs">
+          <div class="thumb reveal"><span class="badge key">重点参考图</span><img src="ref_assets/embedded/emb_p033_x114.jpg" loading="lazy" alt="边角清洁"></div>
+        </div>
+      </div>
+
+
+      <div class="sp reveal">
+        <div class="sp-head">
+          <div class="sp-idx">12</div>
+          <div>
+            <h3>避障</h3>
+            <div class="sp-sub">核心为卖点突出</div>
+          </div>
+        </div>
+        <div class="sp-body"><ul><li>1、画面安排：近景构图，选用多介质物体，丰富避障测试环境</li><li>2、特效样式的选择：按需挑选适配样式</li></ul></div>
+        <div class="sp-imgs">
+          <div class="thumb reveal"><span class="badge key">重点参考图</span><img src="ref_assets/embedded/emb_p033_x115.jpg" loading="lazy" alt="避障"></div>
+        </div>
+      </div>
+
+
+      <div class="sp reveal">
+        <div class="sp-head">
+          <div class="sp-idx">13</div>
+          <div>
+            <h3>蓝光</h3>
+            
+          </div>
+        </div>
+        <div class="sp-body"><ul><li>1、蓝光色相的选择：优选中饱和冷蓝光|或统一金色光，可按项目灵活调整色相</li><li>2、特效的表现形式：射线、面光、网格定位，按需挑选适配样式</li></ul></div>
+        <div class="sp-imgs">
+          <div class="thumb reveal"><span class="badge key">重点参考图</span><img src="ref_assets/embedded/emb_p033_x116.jpg" loading="lazy" alt="蓝光"></div>
+        </div>
+      </div>
+
+
+      <div class="sp reveal">
+        <div class="sp-head">
+          <div class="sp-idx">14</div>
+          <div>
+            <h3>超长续航</h3>
+            
+          </div>
+        </div>
+        <div class="sp-body"><ul><li>1、结合大户型场景：标注续航参数，搭配 icon 辅助信息说明</li><li>2、突出电池表现：借助特效强化电池，凸显长续航产品优势</li></ul></div>
+        <div class="sp-imgs">
+          <div class="thumb reveal"><span class="badge key">重点参考图</span><img src="ref_assets/embedded/emb_p033_x117.jpg" loading="lazy" alt="超长续航"></div>
+<div class="thumb reveal"><span class="badge opt">可选参考图</span><img src="ref_assets/embedded/emb_p033_x118.jpg" loading="lazy" alt="超长续航"></div>
+        </div>
+      </div>
+
+
+      <div class="sp reveal">
+        <div class="sp-head">
+          <div class="sp-idx">15</div>
+          <div>
+            <h3>宠物友好</h3>
+            
+          </div>
+        </div>
+        <div class="sp-body"><ul><li>1、根据需求进行方向选择</li><li>2、视觉层级规划：拉开远中近景，明确画面视觉中心</li></ul></div>
+        <div class="sp-imgs">
+          <div class="thumb reveal"><span class="badge key">重点参考图</span><img src="ref_assets/embedded/emb_p034_x118.jpg" loading="lazy" alt="宠物友好"></div>
+        </div>
+      </div>
+
+
+      <div class="sp reveal">
+        <div class="sp-head">
+          <div class="sp-idx">16</div>
+          <div>
+            <h3>集尘 - 全能基站</h3>
+            <div class="sp-sub">集尘</div>
+          </div>
+        </div>
+        <div class="sp-body"><ul><li>1、全能卖点突出：选合适角度，清晰展示各功能工位</li><li>2、特效渲染：分功能呈现水、脏污、热风等真实效果</li></ul></div>
+        <div class="sp-imgs">
+          <div class="thumb reveal"><span class="badge key">重点参考图</span><img src="ref_assets/embedded/emb_p034_x89.jpg" loading="lazy" alt="集尘 - 全能基站"></div>
+        </div>
+      </div>
+
+
+      <div class="sp reveal">
+        <div class="sp-head">
+          <div class="sp-idx">17</div>
+          <div>
+            <h3>热风烘干</h3>
+            <div class="sp-sub">核心表现烘干</div>
+          </div>
+        </div>
+        <div class="sp-body"><ul><li>1、卖点功能突出：重点展示基站烘干角度，强化烘干卖点</li><li>2、特效渲染：用柔和淡雾气模拟热风，质感真实，避免夸张失真</li><li>3、机器材质质感：壳体与面板光影写实，不因高温产生夸张变色</li><li>4、品牌色调：按配置把控品牌色，强化追觅专属视觉识别</li></ul></div>
+        <div class="sp-imgs">
+          <div class="thumb reveal"><span class="badge key">重点参考图</span><img src="ref_assets/embedded/emb_p034_x121.jpg" loading="lazy" alt="热风烘干"></div>
+        </div>
+      </div>
+
+
+      <div class="sp reveal">
+        <div class="sp-head">
+          <div class="sp-idx">18</div>
+          <div>
+            <h3>集尘</h3>
+            <div class="sp-sub">重点表现集尘功能以及尘土的质感</div>
+          </div>
+        </div>
+        <div class="sp-body"><ul><li>1、功能展示：直观演示集尘动作，搭配气流与脏污示意</li><li>2、尘土真实质感：呈现灰絮、毛发、猫砂、灰尘等，材质通透写实</li></ul></div>
+        <div class="sp-imgs">
+          <div class="thumb reveal"><span class="badge key">重点参考图</span><img src="ref_assets/embedded/emb_p034_x122.jpg" loading="lazy" alt="集尘"></div>
+        </div>
+      </div>
+
+
+      <div class="sp reveal">
+        <div class="sp-head">
+          <div class="sp-idx">19</div>
+          <div>
+            <h3>超薄基站</h3>
+            <div class="sp-sub">充分体现基站机身薄这一概念，适配现代家装</div>
+          </div>
+        </div>
+        <div class="sp-body"><ul><li>1、家居场景：选取电视柜、矮柜、洗手台下方，借踢脚线等参照物强化矮基站特征</li><li>2、注意机器离开基站，机舱门的开合状态（与产品经理确认）</li></ul></div>
+        <div class="sp-imgs">
+          <div class="thumb reveal"><span class="badge key">重点参考图</span><img src="ref_assets/embedded/emb_p034_x123.jpg" loading="lazy" alt="超薄基站"></div>
+<div class="thumb reveal"><span class="badge opt">可选参考图</span><img src="ref_assets/embedded/emb_p034_x124.jpg" loading="lazy" alt="超薄基站"></div>
+        </div>
+      </div>
+
+
+      <div class="sp reveal">
+        <div class="sp-head">
+          <div class="sp-idx">20</div>
+          <div>
+            <h3>不同区域</h3>
+            <div class="sp-sub">卖点直观明了</div>
+          </div>
+        </div>
+        <div class="sp-body"><ul><li>1、家居场景：覆盖场景按需调整</li><li>2、场景表达清晰</li></ul></div>
+        <div class="sp-imgs">
+          <div class="thumb reveal"><span class="badge key">重点参考图</span><img src="ref_assets/embedded/emb_p035_x124.jpg" loading="lazy" alt="不同区域"></div>
+        </div>
+      </div>
+
+
+      <div class="sp reveal">
+        <div class="sp-head">
+          <div class="sp-idx">21</div>
+          <div>
+            <h3>主图（KV）A面</h3>
+            
+          </div>
+        </div>
+        <div class="sp-body"><ul><li>1、视觉焦点：黑金配色</li><li>2、突出产品首推性能特点，可通过特效、远近虚实对比进行强化</li><li>3、构图比例：产品在画面中的占比合理</li></ul></div>
+        <div class="sp-imgs">
+          <div class="thumb reveal"><span class="badge key">重点参考图</span><img src="ref_assets/embedded/emb_p035_x127.jpg" loading="lazy" alt="主图（KV）A面"></div>
+        </div>
+      </div>
+
+
+      <div class="sp reveal">
+        <div class="sp-head">
+          <div class="sp-idx">22</div>
+          <div>
+            <h3>主图（KV）A面</h3>
+            
+          </div>
+        </div>
+        <div class="sp-body"><ul><li>1、突出产品首推性能特点，可通过特效、远近虚实对比进行强化</li></ul></div>
+        <div class="sp-imgs">
+          <div class="thumb reveal"><span class="badge key">重点参考图</span><img src="ref_assets/embedded/emb_p035_x128.jpg" loading="lazy" alt="主图（KV）A面"></div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</section>
+
+<section id="gallery" style="background:var(--panel)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="en">Reference Gallery</div>
+      <h2>标杆参考图库</h2>
+      <p>PDF 内全部标杆参考图（约 200 张），按来源页面与内容分组，点击可放大查看。</p>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>机身清洁 · 避障 · 越障 · 液体 · 边角</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p040_x139.jpg" loading="lazy" alt="emb_p040_x139.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p040_x140.jpg" loading="lazy" alt="emb_p040_x140.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p040_x141.jpg" loading="lazy" alt="emb_p040_x141.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p040_x142.jpg" loading="lazy" alt="emb_p040_x142.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p040_x143.jpg" loading="lazy" alt="emb_p040_x143.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p040_x144.jpg" loading="lazy" alt="emb_p040_x144.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p040_x78.jpg" loading="lazy" alt="emb_p040_x78.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p040_x80.jpg" loading="lazy" alt="emb_p040_x80.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p040_x87.jpg" loading="lazy" alt="emb_p040_x87.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>避障 · 越障 · 机身</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p041_x143.jpg" loading="lazy" alt="emb_p041_x143.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p041_x144.jpg" loading="lazy" alt="emb_p041_x144.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p041_x147.jpg" loading="lazy" alt="emb_p041_x147.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p041_x78.jpg" loading="lazy" alt="emb_p041_x78.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p041_x80.jpg" loading="lazy" alt="emb_p041_x80.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>毛发 · 液体 · 宠物 · 地毯 · 机身</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p042_x150.jpg" loading="lazy" alt="emb_p042_x150.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p042_x151.jpg" loading="lazy" alt="emb_p042_x151.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p042_x152.jpg" loading="lazy" alt="emb_p042_x152.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p042_x153.jpg" loading="lazy" alt="emb_p042_x153.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p042_x154.jpg" loading="lazy" alt="emb_p042_x154.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p042_x155.jpg" loading="lazy" alt="emb_p042_x155.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p042_x156.jpg" loading="lazy" alt="emb_p042_x156.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>地毯 · 滚刷 · 拖布 · 越障</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p043_x154.jpg" loading="lazy" alt="emb_p043_x154.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p043_x155.jpg" loading="lazy" alt="emb_p043_x155.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p043_x156.jpg" loading="lazy" alt="emb_p043_x156.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p043_x159.jpg" loading="lazy" alt="emb_p043_x159.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p043_x160.jpg" loading="lazy" alt="emb_p043_x160.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p043_x161.jpg" loading="lazy" alt="emb_p043_x161.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p043_x162.jpg" loading="lazy" alt="emb_p043_x162.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p043_x163.jpg" loading="lazy" alt="emb_p043_x163.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>蒸汽 · 吸力 · 避障</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p044_x144.jpg" loading="lazy" alt="emb_p044_x144.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p044_x161.jpg" loading="lazy" alt="emb_p044_x161.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p044_x162.jpg" loading="lazy" alt="emb_p044_x162.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p044_x163.jpg" loading="lazy" alt="emb_p044_x163.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p044_x166.jpg" loading="lazy" alt="emb_p044_x166.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p044_x167.jpg" loading="lazy" alt="emb_p044_x167.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p044_x168.jpg" loading="lazy" alt="emb_p044_x168.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p044_x169.jpg" loading="lazy" alt="emb_p044_x169.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p044_x170.jpg" loading="lazy" alt="emb_p044_x170.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p044_x171.jpg" loading="lazy" alt="emb_p044_x171.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p044_x172.jpg" loading="lazy" alt="emb_p044_x172.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p044_x173.jpg" loading="lazy" alt="emb_p044_x173.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>避障 · 越障 · 机身 · 拖布 · 蒸汽 · 吸力</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p045_x171.jpg" loading="lazy" alt="emb_p045_x171.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p045_x172.jpg" loading="lazy" alt="emb_p045_x172.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p045_x173.jpg" loading="lazy" alt="emb_p045_x173.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p045_x176.jpg" loading="lazy" alt="emb_p045_x176.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p045_x177.jpg" loading="lazy" alt="emb_p045_x177.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p045_x178.jpg" loading="lazy" alt="emb_p045_x178.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p045_x179.jpg" loading="lazy" alt="emb_p045_x179.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p045_x180.jpg" loading="lazy" alt="emb_p045_x180.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p045_x181.jpg" loading="lazy" alt="emb_p045_x181.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p045_x182.jpg" loading="lazy" alt="emb_p045_x182.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p045_x183.jpg" loading="lazy" alt="emb_p045_x183.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p045_x184.jpg" loading="lazy" alt="emb_p045_x184.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p045_x185.jpg" loading="lazy" alt="emb_p045_x185.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p045_x186.jpg" loading="lazy" alt="emb_p045_x186.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p045_x187.jpg" loading="lazy" alt="emb_p045_x187.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>超薄 · 越障 · 避障 · 毛发 · 宠物 · 续航 · 集尘 · 光影 · 蓝光</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p046_x142.jpg" loading="lazy" alt="emb_p046_x142.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p046_x185.jpg" loading="lazy" alt="emb_p046_x185.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p046_x186.jpg" loading="lazy" alt="emb_p046_x186.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p046_x187.jpg" loading="lazy" alt="emb_p046_x187.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p046_x190.jpg" loading="lazy" alt="emb_p046_x190.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p046_x191.jpg" loading="lazy" alt="emb_p046_x191.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p046_x192.jpg" loading="lazy" alt="emb_p046_x192.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p046_x193.jpg" loading="lazy" alt="emb_p046_x193.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p046_x194.jpg" loading="lazy" alt="emb_p046_x194.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p046_x195.jpg" loading="lazy" alt="emb_p046_x195.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p046_x196.jpg" loading="lazy" alt="emb_p046_x196.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p046_x197.jpg" loading="lazy" alt="emb_p046_x197.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p046_x198.jpg" loading="lazy" alt="emb_p046_x198.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p046_x199.jpg" loading="lazy" alt="emb_p046_x199.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p046_x200.jpg" loading="lazy" alt="emb_p046_x200.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p046_x201.jpg" loading="lazy" alt="emb_p046_x201.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p046_x202.jpg" loading="lazy" alt="emb_p046_x202.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p046_x203.jpg" loading="lazy" alt="emb_p046_x203.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>避障 · 毛发 · 宠物 · 基站 · 集尘 · 热风烘干 · 超薄</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p047_x201.jpg" loading="lazy" alt="emb_p047_x201.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p047_x202.jpg" loading="lazy" alt="emb_p047_x202.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p047_x203.jpg" loading="lazy" alt="emb_p047_x203.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p047_x206.jpg" loading="lazy" alt="emb_p047_x206.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p047_x207.jpg" loading="lazy" alt="emb_p047_x207.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p047_x208.jpg" loading="lazy" alt="emb_p047_x208.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p047_x209.jpg" loading="lazy" alt="emb_p047_x209.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p047_x210.jpg" loading="lazy" alt="emb_p047_x210.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p047_x211.jpg" loading="lazy" alt="emb_p047_x211.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p047_x212.jpg" loading="lazy" alt="emb_p047_x212.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p047_x213.jpg" loading="lazy" alt="emb_p047_x213.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p047_x214.jpg" loading="lazy" alt="emb_p047_x214.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p047_x215.jpg" loading="lazy" alt="emb_p047_x215.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p047_x216.jpg" loading="lazy" alt="emb_p047_x216.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p047_x217.jpg" loading="lazy" alt="emb_p047_x217.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p047_x218.jpg" loading="lazy" alt="emb_p047_x218.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>避障 · 基站 · 超薄 · 光影</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p048_x216.jpg" loading="lazy" alt="emb_p048_x216.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p048_x217.jpg" loading="lazy" alt="emb_p048_x217.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p048_x218.jpg" loading="lazy" alt="emb_p048_x218.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p048_x221.jpg" loading="lazy" alt="emb_p048_x221.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p048_x222.jpg" loading="lazy" alt="emb_p048_x222.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p048_x223.jpg" loading="lazy" alt="emb_p048_x223.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p048_x224.jpg" loading="lazy" alt="emb_p048_x224.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>基站</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p053_x235.jpg" loading="lazy" alt="emb_p053_x235.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>配件 · 毛发</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p054_x238.jpg" loading="lazy" alt="emb_p054_x238.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p054_x239.jpg" loading="lazy" alt="emb_p054_x239.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p054_x240.jpg" loading="lazy" alt="emb_p054_x240.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p054_x241.jpg" loading="lazy" alt="emb_p054_x241.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p054_x242.jpg" loading="lazy" alt="emb_p054_x242.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>毛发 · 全场景 · 吸力</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p055_x242.jpg" loading="lazy" alt="emb_p055_x242.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p055_x245.jpg" loading="lazy" alt="emb_p055_x245.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p055_x246.jpg" loading="lazy" alt="emb_p055_x246.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p055_x247.jpg" loading="lazy" alt="emb_p055_x247.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p055_x248.jpg" loading="lazy" alt="emb_p055_x248.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p055_x249.jpg" loading="lazy" alt="emb_p055_x249.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p055_x250.jpg" loading="lazy" alt="emb_p055_x250.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p055_x251.jpg" loading="lazy" alt="emb_p055_x251.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p055_x252.jpg" loading="lazy" alt="emb_p055_x252.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>蒸汽 · 避障 · 拖地</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p056_x250.jpg" loading="lazy" alt="emb_p056_x250.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p056_x251.jpg" loading="lazy" alt="emb_p056_x251.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p056_x252.jpg" loading="lazy" alt="emb_p056_x252.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p056_x255.jpg" loading="lazy" alt="emb_p056_x255.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p056_x256.jpg" loading="lazy" alt="emb_p056_x256.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>热水 · 越障 · 避障 · 毛发 · 集尘 · 清洁 · 续航</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p057_x255.jpg" loading="lazy" alt="emb_p057_x255.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p057_x256.jpg" loading="lazy" alt="emb_p057_x256.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p057_x259.jpg" loading="lazy" alt="emb_p057_x259.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p057_x260.jpg" loading="lazy" alt="emb_p057_x260.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p057_x261.jpg" loading="lazy" alt="emb_p057_x261.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p057_x262.jpg" loading="lazy" alt="emb_p057_x262.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p057_x263.jpg" loading="lazy" alt="emb_p057_x263.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p057_x264.jpg" loading="lazy" alt="emb_p057_x264.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p057_x265.jpg" loading="lazy" alt="emb_p057_x265.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p057_x266.jpg" loading="lazy" alt="emb_p057_x266.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>热风烘干 · 越障 · 毛发 · 集尘 · 拖地</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p058_x264.jpg" loading="lazy" alt="emb_p058_x264.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p058_x265.jpg" loading="lazy" alt="emb_p058_x265.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p058_x266.jpg" loading="lazy" alt="emb_p058_x266.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p058_x269.jpg" loading="lazy" alt="emb_p058_x269.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p058_x270.jpg" loading="lazy" alt="emb_p058_x270.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p058_x271.jpg" loading="lazy" alt="emb_p058_x271.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p058_x272.jpg" loading="lazy" alt="emb_p058_x272.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p058_x273.jpg" loading="lazy" alt="emb_p058_x273.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p058_x274.jpg" loading="lazy" alt="emb_p058_x274.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p058_x275.jpg" loading="lazy" alt="emb_p058_x275.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p058_x276.jpg" loading="lazy" alt="emb_p058_x276.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p058_x277.jpg" loading="lazy" alt="emb_p058_x277.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p058_x278.jpg" loading="lazy" alt="emb_p058_x278.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p058_x279.jpg" loading="lazy" alt="emb_p058_x279.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p058_x280.jpg" loading="lazy" alt="emb_p058_x280.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>越障 · 毛发 · 拖地</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p059_x150.jpg" loading="lazy" alt="emb_p059_x150.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p059_x278.jpg" loading="lazy" alt="emb_p059_x278.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p059_x279.jpg" loading="lazy" alt="emb_p059_x279.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p059_x280.jpg" loading="lazy" alt="emb_p059_x280.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p059_x283.jpg" loading="lazy" alt="emb_p059_x283.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p059_x284.jpg" loading="lazy" alt="emb_p059_x284.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p059_x285.jpg" loading="lazy" alt="emb_p059_x285.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p059_x286.jpg" loading="lazy" alt="emb_p059_x286.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p059_x287.jpg" loading="lazy" alt="emb_p059_x287.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p059_x288.jpg" loading="lazy" alt="emb_p059_x288.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p059_x289.jpg" loading="lazy" alt="emb_p059_x289.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p059_x290.jpg" loading="lazy" alt="emb_p059_x290.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p059_x291.jpg" loading="lazy" alt="emb_p059_x291.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p059_x292.jpg" loading="lazy" alt="emb_p059_x292.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p059_x293.jpg" loading="lazy" alt="emb_p059_x293.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p059_x294.jpg" loading="lazy" alt="emb_p059_x294.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>越障 · 毛发 · 拖地</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p060_x292.jpg" loading="lazy" alt="emb_p060_x292.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p060_x293.jpg" loading="lazy" alt="emb_p060_x293.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p060_x294.jpg" loading="lazy" alt="emb_p060_x294.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p060_x297.jpg" loading="lazy" alt="emb_p060_x297.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p060_x298.jpg" loading="lazy" alt="emb_p060_x298.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p060_x299.jpg" loading="lazy" alt="emb_p060_x299.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p060_x300.jpg" loading="lazy" alt="emb_p060_x300.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p060_x301.jpg" loading="lazy" alt="emb_p060_x301.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p060_x302.jpg" loading="lazy" alt="emb_p060_x302.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p060_x303.jpg" loading="lazy" alt="emb_p060_x303.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p060_x304.jpg" loading="lazy" alt="emb_p060_x304.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p060_x305.jpg" loading="lazy" alt="emb_p060_x305.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>拖地 · 毛发</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p061_x303.jpg" loading="lazy" alt="emb_p061_x303.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p061_x304.jpg" loading="lazy" alt="emb_p061_x304.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p061_x305.jpg" loading="lazy" alt="emb_p061_x305.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p061_x308.jpg" loading="lazy" alt="emb_p061_x308.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p061_x309.jpg" loading="lazy" alt="emb_p061_x309.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>毛发</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p066_x320.jpg" loading="lazy" alt="emb_p066_x320.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p066_x321.jpg" loading="lazy" alt="emb_p066_x321.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p066_x322.jpg" loading="lazy" alt="emb_p066_x322.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p066_x323.jpg" loading="lazy" alt="emb_p066_x323.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p066_x324.jpg" loading="lazy" alt="emb_p066_x324.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p066_x325.jpg" loading="lazy" alt="emb_p066_x325.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p066_x326.jpg" loading="lazy" alt="emb_p066_x326.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>避障 · 越障</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p067_x329.jpg" loading="lazy" alt="emb_p067_x329.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p067_x330.jpg" loading="lazy" alt="emb_p067_x330.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p067_x331.jpg" loading="lazy" alt="emb_p067_x331.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p067_x332.jpg" loading="lazy" alt="emb_p067_x332.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p067_x333.jpg" loading="lazy" alt="emb_p067_x333.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p067_x334.jpg" loading="lazy" alt="emb_p067_x334.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p067_x88.jpg" loading="lazy" alt="emb_p067_x88.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>避障 · 拖地 · 毛发</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p068_x337.jpg" loading="lazy" alt="emb_p068_x337.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p068_x338.jpg" loading="lazy" alt="emb_p068_x338.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p068_x339.jpg" loading="lazy" alt="emb_p068_x339.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p068_x340.jpg" loading="lazy" alt="emb_p068_x340.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p068_x341.jpg" loading="lazy" alt="emb_p068_x341.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p068_x342.jpg" loading="lazy" alt="emb_p068_x342.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p068_x343.jpg" loading="lazy" alt="emb_p068_x343.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p068_x344.jpg" loading="lazy" alt="emb_p068_x344.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p068_x345.jpg" loading="lazy" alt="emb_p068_x345.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p068_x346.jpg" loading="lazy" alt="emb_p068_x346.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p068_x88.jpg" loading="lazy" alt="emb_p068_x88.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>毛发</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p069_x346.jpg" loading="lazy" alt="emb_p069_x346.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>毛发</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p070_x351.jpg" loading="lazy" alt="emb_p070_x351.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>毛发 · 避障</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p071_x351.jpg" loading="lazy" alt="emb_p071_x351.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p071_x354.jpg" loading="lazy" alt="emb_p071_x354.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p071_x355.jpg" loading="lazy" alt="emb_p071_x355.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p071_x356.jpg" loading="lazy" alt="emb_p071_x356.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>避障 · 拖地</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p072_x359.jpg" loading="lazy" alt="emb_p072_x359.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p072_x360.jpg" loading="lazy" alt="emb_p072_x360.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p072_x361.jpg" loading="lazy" alt="emb_p072_x361.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p072_x362.jpg" loading="lazy" alt="emb_p072_x362.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p072_x363.jpg" loading="lazy" alt="emb_p072_x363.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p072_x364.jpg" loading="lazy" alt="emb_p072_x364.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p072_x365.jpg" loading="lazy" alt="emb_p072_x365.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p072_x366.jpg" loading="lazy" alt="emb_p072_x366.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>避障</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p073_x365.jpg" loading="lazy" alt="emb_p073_x365.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p073_x366.jpg" loading="lazy" alt="emb_p073_x366.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>主图KV · 基站</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p079_x242.jpg" loading="lazy" alt="emb_p079_x242.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p079_x381.jpg" loading="lazy" alt="emb_p079_x381.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p079_x382.jpg" loading="lazy" alt="emb_p079_x382.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>吸力 · 拖地 · 避障 · 边角 · 毛发 · 越障</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p080_x382.jpg" loading="lazy" alt="emb_p080_x382.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p080_x385.jpg" loading="lazy" alt="emb_p080_x385.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p080_x386.jpg" loading="lazy" alt="emb_p080_x386.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p080_x387.jpg" loading="lazy" alt="emb_p080_x387.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p080_x388.jpg" loading="lazy" alt="emb_p080_x388.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p080_x389.jpg" loading="lazy" alt="emb_p080_x389.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p080_x390.jpg" loading="lazy" alt="emb_p080_x390.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p080_x391.jpg" loading="lazy" alt="emb_p080_x391.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>蓝光 · 光影 · 续航 · 主图KV</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p081_x394.jpg" loading="lazy" alt="emb_p081_x394.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p081_x395.jpg" loading="lazy" alt="emb_p081_x395.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p081_x396.jpg" loading="lazy" alt="emb_p081_x396.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p081_x397.jpg" loading="lazy" alt="emb_p081_x397.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>越障 · 集尘 · 边角 · 主图KV</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p085_x406.jpg" loading="lazy" alt="emb_p085_x406.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p085_x407.jpg" loading="lazy" alt="emb_p085_x407.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p085_x408.jpg" loading="lazy" alt="emb_p085_x408.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>热风烘干 · 集尘 · 基站 · 主图KV</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p092_x241.jpg" loading="lazy" alt="emb_p092_x241.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p092_x423.jpg" loading="lazy" alt="emb_p092_x423.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p092_x424.jpg" loading="lazy" alt="emb_p092_x424.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>越障 · 吸力</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p093_x427.jpg" loading="lazy" alt="emb_p093_x427.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p093_x428.jpg" loading="lazy" alt="emb_p093_x428.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p093_x429.jpg" loading="lazy" alt="emb_p093_x429.jpg"></div>
+      </div>
+    </div>
+
+
+    <div class="grp reveal">
+      <h4>主图KV · 越障 · 吸力</h4>
+      <div class="gallery-grid">
+        <div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p094_x432.jpg" loading="lazy" alt="emb_p094_x432.jpg"></div>
+<div class="g-thumb reveal"><img src="ref_assets/embedded/emb_p094_x433.jpg" loading="lazy" alt="emb_p094_x433.jpg"></div>
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">DREAME · 扫地机 BU · 卖点图渲染验收标准参考图库</div>
+</footer>
+
+<div class="lb" id="lb">
+  <button class="close" id="lbClose">×</button>
+  <button class="nav-btn prev" id="lbPrev">‹</button>
+  <img id="lbImg" src="" alt="">
+  <div class="cap" id="lbCap"></div>
+  <button class="nav-btn next" id="lbNext">›</button>
+</div>
+
+<script>
+(function(){
+  var thumbs = Array.prototype.slice.call(document.querySelectorAll('.thumb img, .g-thumb img'));
+  var lb = document.getElementById('lb');
+  var lbImg = document.getElementById('lbImg');
+  var lbCap = document.getElementById('lbCap');
+  var idx = 0;
+
+  function open(i){
+    idx = i;
+    var t = thumbs[idx];
+    lbImg.src = t.currentSrc || t.src;
+    lbCap.textContent = (t.alt || '参考图') + '  ·  ' + (idx+1) + ' / ' + thumbs.length;
+    lb.classList.add('open');
+  }
+  function close(){ lb.classList.remove('open'); }
+  function move(d){ open((idx + d + thumbs.length) % thumbs.length); }
+
+  thumbs.forEach(function(t, i){ t.parentElement.addEventListener('click', function(){ open(i); }); });
+  document.getElementById('lbClose').addEventListener('click', close);
+  document.getElementById('lbPrev').addEventListener('click', function(e){ e.stopPropagation(); move(-1); });
+  document.getElementById('lbNext').addEventListener('click', function(e){ e.stopPropagation(); move(1); });
+  lb.addEventListener('click', function(e){ if(e.target === lb) close(); });
+  document.addEventListener('keydown', function(e){
+    if(!lb.classList.contains('open')) return;
+    if(e.key === 'Escape') close();
+    if(e.key === 'ArrowLeft') move(-1);
+    if(e.key === 'ArrowRight') move(1);
+  });
+
+  // reveal on scroll
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, {threshold:.08});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+})();
+</script>
+</body>
+</html>
