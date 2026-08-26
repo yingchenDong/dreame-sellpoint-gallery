@@ -1,0 +1,42 @@
+name: Collab auto process
+
+# 触发条件：data/registrations 或 data/decisions 有新文件提交，或手动运行
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'data/registrations/**'
+      - 'data/decisions/**'
+
+permissions:
+  contents: write
+
+jobs:
+  process:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install pymupdf
+
+      - name: Run collab processor
+        run: python3 tools/collab_process.py --all
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "marvis-bot"
+          git config user.email "marvis-bot@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No content changes, skip commit"
+          else
+            git commit -m "auto: 处理协作中心注册/审核数据"
+            git push
+          fi
