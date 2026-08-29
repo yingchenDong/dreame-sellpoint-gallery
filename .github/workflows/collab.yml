@@ -1,12 +1,13 @@
 name: Collab auto process
 
-# 触发条件：data/registrations 或 data/decisions 有新文件提交，或手动运行
+# 触发条件：data/registrations、data/decisions 有新文件提交，或 data/inbox 有直传文件，或手动运行
 on:
   workflow_dispatch:
   push:
     paths:
       - 'data/registrations/**'
       - 'data/decisions/**'
+      - 'data/inbox/**'
 
 permissions:
   contents: write

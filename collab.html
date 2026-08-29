@@ -329,16 +329,16 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
         </div>
       </div>
 
-      <!-- 上传申请 -->
+      <!-- 上传更新 -->
       <div class="collab-card reveal">
-        <h3><span class="ico"><svg viewBox="0 0 24 24"><path d="M12 16V4m0 0 4 4m-4-4L8 8"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg></span>上传申请（会员）</h3>
-        <div class="cd">登录后选择要改动的位置，说明改动内容并附上文件，提交后等待管理员审核。</div>
+        <h3><span class="ico"><svg viewBox="0 0 24 24"><path d="M12 16V4m0 0 4 4m-4-4L8 8"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg></span>上传更新（会员）</h3>
+        <div class="cd">选择要更新的内容类型与文件，点击上传后文件会直接提交到系统，后台自动处理并更新网页，无需下载任何文件。</div>
         <div class="cf">
           <div>
-            <label>改动位置</label>
+            <label>更新内容类型</label>
             <select id="upPosition">
+              <option value="sellpoint">卖点参考（Excel 验收标准）</option>
               <option value="standard">核心验收标准（PDF）</option>
-              <option value="sellpoint">卖点文案（Excel）</option>
               <option value="gallery">标杆图库（图片压缩包）</option>
               <option value="other">其他 / 综合更新</option>
             </select>
@@ -348,10 +348,10 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
             <textarea id="upContent" placeholder="请写清楚：改了什么、为什么改、期望的效果，便于管理员快速判断"></textarea>
           </div>
           <div>
-            <label>选择文件（可多选，文件名会尽量保留）</label>
+            <label>选择要上传的文件</label>
             <input type="file" id="upFiles" multiple>
           </div>
-          <button class="cbtn" id="btnUpload">生成上传申请</button>
+          <button class="cbtn" id="btnUpload">上传到系统</button>
           <div class="cstatus" id="upStatus"></div>
         </div>
         <div class="collab-note" id="upNote" style="display:none"></div>
@@ -558,7 +558,7 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
     });
   }
 
-  // ---- 上传申请 ----
+  // ---- 上传更新：真实上传到系统（打开 GitHub 上传页拖入文件，后台自动处理） ----
   function doUpload(){
     if(!session){ setStatus($c('upStatus'), '请先登录再上传', 'err'); return; }
     var position = $c('upPosition').value;
@@ -566,33 +566,19 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
     var files = $c('upFiles').files;
     if(!content){ setStatus($c('upStatus'), '请填写改动内容说明', 'err'); return; }
     if(!files || !files.length){ setStatus($c('upStatus'), '请选择要上传的文件', 'err'); return; }
-    var id = newId();
     var fnames = [];
     for(var i=0;i<files.length;i++){
-      fnames.push(id + '_' + files[i].name);
+      fnames.push(files[i].name);
     }
-    var meta = {
-      id: id,
-      applicant: session.nick,
-      type: 'upload',
-      position: position,
-      content: content,
-      files: fnames,
-      time: nowIso()
-    };
-    download(id + '.json', JSON.stringify(meta, null, 2));
-    for(var j=0;j<files.length;j++){
-      (function(f){
-        var reader = new FileReader();
-        reader.onload = function(){
-          download(id + '_' + f.name, reader.result, f.type || 'application/octet-stream');
-        };
-        reader.readAsArrayBuffer(f);
-      })(files[j]);
-    }
-    setStatus($c('upStatus'), '上传申请已生成，共 ' + fnames.length + ' 个文件开始下载', 'ok');
+    setStatus($c('upStatus'), '正在打开系统上传页，请把要上传的文件拖入并提交', 'ok');
     $c('upNote').style.display = 'block';
-    $c('upNote').innerHTML = '请把下载的 <b>' + id + '.json</b> 与 <b>' + fnames.length + ' 个文件</b>（' + esc(fnames.join('、')) + '）一起上传到仓库 <code>data/inbox/</code> 目录。<br><br>👉 <a class="up-btn" style="display:inline-block" href="' + UPLOAD_URL + 'data/inbox" target="_blank" rel="noopener">打开上传页</a>（把下载的文件全部拖进去，点 Commit changes 提交）';
+    $c('upNote').innerHTML =
+      '<b>已为您打开系统上传页</b>，接下来请：<br>'
+      + '1️⃣ 把本机要上传的 <b>' + fnames.length + ' 个文件</b>（' + esc(fnames.join('、')) + '）拖入页面<br>'
+      + '2️⃣ 在底部 Commit 信息里粘贴改动说明：<b>' + esc(content) + '</b><br>'
+      + '3️⃣ 点击 <b>Commit changes</b> 提交<br><br>'
+      + '提交后后台会自动处理并更新网页，进度与结果会以通知形式回传给你，全程无需下载任何文件。'
+      + '<br><br>👉 <a class="up-btn" style="display:inline-block" href="' + UPLOAD_URL + 'data/inbox" target="_blank" rel="noopener" id="upGoBtn">打开上传页</a>';
     $c('upContent').value = '';
     $c('upFiles').value = '';
   }

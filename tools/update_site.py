@@ -109,19 +109,20 @@ def parse_site(src_xlsx):
         if a and ("核心关键词" in b):
             standards.append({"name": a, "body": b})
 
-    # 细分类别：C 列，R1 表头之后、卖点表头(R20 卖点图展现形式)之前
+    # 细分类别：C 列，R1 表头之后、卖点表头之前
     categories = []
     for r in sheet:
         if r["row"] <= 1:
             continue
-        if r["row"] >= 20:
+        a = r["cells"].get("A", "")
+        if "卖点图展现形式" in a or "主图展现形式" in a:
             break
         c = r["cells"].get("C", "")
         if c:
             lines = split_lines(c)
             categories.append({"name": lines[0], "desc": " ".join(lines[1:]) if len(lines) > 1 else ""})
 
-    # 卖点：从"卖点图展现形式"行(20)起，含"主图展现形式"行，C 列每行一个卖点
+    # 卖点：从"卖点图展现形式"行起，含"主图展现形式"行，C 列每行一个卖点
     sellpoints = []
     in_sell = False
     idx = 0
@@ -130,7 +131,7 @@ def parse_site(src_xlsx):
         c = r["cells"].get("C", "")
         b = r["cells"].get("B", "")
         if "卖点图展现形式" in a or "主图展现形式" in a:
-            in_sell = True  # 表头行自身也含首个卖点（如 R20 蒸汽拖地、R40 主图KV 高配），不跳过
+            in_sell = True  # 表头行自身也含首个卖点（如 R18 蒸汽拖地、R41 主图KV 高配），不跳过
         if not in_sell:
             continue
         if c:
@@ -141,6 +142,177 @@ def parse_site(src_xlsx):
                 sp["tier"] = b.split("（")[0].strip() if b and len(b) < 20 else ""
                 sellpoints.append(sp)
     return {"standards": standards, "categories": categories, "sellpoints": sellpoints}
+
+
+# ---------------------------------------------------------------- 新版 Excel 重建（含内嵌图）
+XLSX_NS_DRAW = {
+    "xdr": "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing",
+    "a": "http://schemas.openxmlformats.org/drawingml/2006/main",
+    "r": "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
+}
+
+
+def xlsx_drawing_row_map(path):
+    """解析 xlsx 内嵌图锚点：返回 {excel_row: [(col, media_path), ...]}"""
+    zf = zipfile.ZipFile(path)
+    names = zf.namelist()
+    drawing_xml = [n for n in names if n.startswith("xl/drawings/") and n.endswith(".xml")]
+    if not drawing_xml:
+        return {}
+    rels = {}
+    rels_name = "xl/drawings/_rels/" + drawing_xml[0].split("/")[-1] + ".rels"
+    if rels_name in names:
+        rels_root = ET.fromstring(zf.read(rels_name))
+        rels = {rel.get("Id"): rel.get("Target").replace("../media/", "xl/media/") for rel in rels_root}
+    drawing_root = ET.fromstring(zf.read(drawing_xml[0]))
+    row_map = {}
+    for anchor in drawing_root:
+        tag = anchor.tag.split("}")[-1]
+        if tag not in ("twoCellAnchor", "oneCellAnchor"):
+            continue
+        frm = anchor.find("xdr:from", XLSX_NS_DRAW)
+        blip = anchor.find(".//xdr:blipFill/a:blip", XLSX_NS_DRAW)
+        if blip is None or frm is None:
+            continue
+        rid = blip.get("{http://schemas.openxmlformats.org/officeDocument/2006/relationships}embed")
+        fcol = int(frm.find("xdr:col", XLSX_NS_DRAW).text)
+        frow = int(frm.find("xdr:row", XLSX_NS_DRAW).text)
+        media_path = rels.get(rid, "")
+        if media_path:
+            row_map.setdefault(frow + 1, []).append((fcol, media_path))
+    for k in row_map:
+        row_map[k].sort(key=lambda x: x[0])
+    return row_map
+
+
+def extract_xlsx_images(path, out_root):
+    """提取 xlsx 内嵌图到 out_root/row_XX/N.ext，返回 {excel_row: [相对路径...]}"""
+    row_map = xlsx_drawing_row_map(path)
+    zf = zipfile.ZipFile(path)
+    result = {}
+    for excel_row, items in row_map.items():
+        row_dir = Path(out_root) / f"row_{excel_row:02d}"
+        row_dir.mkdir(parents=True, exist_ok=True)
+        paths = []
+        for idx, (_col, media_path) in enumerate(items, 1):
+            ext = os.path.splitext(media_path)[1] or ".jpg"
+            dest = row_dir / f"{idx}{ext}"
+            try:
+                dest.write_bytes(zf.read(media_path))
+            except KeyError:
+                continue
+            rel = f"{out_root}/row_{excel_row:02d}/{idx}{ext}".replace("\\", "/")
+            paths.append(rel)
+        result[excel_row] = paths
+    return result
+
+
+def rebuild_sections_from_xlsx(src_xlsx, html_file=HTML_FILE):
+    """新版 Excel：提取内嵌图并整体重建 category/sellpoint 区块（横向框架逐行展示）"""
+    sheets = read_xlsx(src_xlsx)
+    sheet = sheets[list(sheets.keys())[0]]
+    # 行文本：{row: {A, B, C}}
+    rows_text = {}
+    for r in sheet:
+        rows_text[r["row"]] = r["cells"]
+    images = extract_xlsx_images(src_xlsx, "ref_assets/sellpoints")
+
+    def row_text(row, col):
+        return (rows_text.get(row) or {}).get(col, "")
+
+    # category：卖点表头前的行
+    cat_rows = []
+    for r in sheet:
+        a = r["cells"].get("A", "")
+        if "卖点图展现形式" in a or "主图展现形式" in a:
+            break
+        if r["row"] <= 1:
+            continue
+        c = r["cells"].get("C", "")
+        if c:
+            cat_rows.append(r["row"])
+    sp_rows = []
+    in_sell = False
+    for r in sheet:
+        a = r["cells"].get("A", "")
+        if "卖点图展现形式" in a or "主图展现形式" in a:
+            in_sell = True
+        if not in_sell:
+            continue
+        c = r["cells"].get("C", "")
+        if c:
+            sp_rows.append(r["row"])
+
+    cat_parts = []
+    for row in cat_rows:
+        c = row_text(row, "C")
+        lines = split_lines(c)
+        title = lines[0] if lines else ""
+        sub = " ".join(lines[1:]) if len(lines) > 1 else ""
+        cat_parts.append(
+            '<div class="cat reveal" data-search="%s"><b>%s</b><span>%s</span></div>'
+            % (esc(title + " " + sub), esc(title), esc(sub))
+        )
+    sp_parts = []
+    for i, row in enumerate(sp_rows, 1):
+        c = row_text(row, "C")
+        b = row_text(row, "B")
+        lines = split_lines(c)
+        title = lines[0] if lines else f"卖点 {i}"
+        sub = ""
+        if "：" in title:
+            sub = title.split("：", 1)[1].strip()
+        elif len(lines) > 1:
+            sub = lines[1]
+        body_items = lines[1:] if len(lines) > 1 else []
+        body_html = "".join("<li>%s</li>" % esc(x) for x in body_items)
+        req_lines = split_lines(b)
+        req_html = ""
+        if req_lines:
+            req_li = "".join("<li>%s</li>" % esc(x) for x in req_lines)
+            req_html = '<div class="sp-req"><div class="sp-req-t">验收标准（B列）</div><ul>%s</ul></div>' % req_li
+        imgs = images.get(row, [])
+        imgs_html = []
+        for j, rel in enumerate(imgs):
+            badge = '<span class="badge key">重点参考图</span>' if j == 0 else '<span class="badge opt">参考图 %d</span>' % (j + 1)
+            imgs_html.append(
+                '<div class="thumb reveal">%s<img src="%s" loading="lazy" alt="%s"></div>'
+                % (badge, esc(rel), esc(title))
+            )
+        search_txt = (title + " " + c + " " + b).replace("\n", " ")
+        sp_parts.append(
+            '<div class="sp reveal" data-search="%s">\n'
+            '  <div class="sp-head">\n'
+            '    <div class="sp-idx">%02d</div>\n'
+            '    <div><h3>%s</h3>%s</div>\n'
+            '  </div>\n'
+            '  <div class="sp-body">%s%s</div>\n'
+            '  <div class="sp-imgs">%s</div>\n'
+            '</div>'
+            % (esc(search_txt), i, esc(title),
+               ('<div class="sp-sub">%s</div>' % esc(sub)) if sub else "",
+               ('<ul>%s</ul>' % body_html) if body_html else "", req_html,
+               "\n".join(imgs_html))
+        )
+
+    src = Path(html_file).read_text(encoding="utf-8")
+
+    def replace_section(src, sec_id, new_inner):
+        pat = re.compile(r'(<section id="%s"[^>]*>).*?(</section>)' % sec_id, re.S)
+        m = pat.search(src)
+        if not m:
+            raise RuntimeError("section %s not found" % sec_id)
+        return src[:m.start()] + m.group(1) + "\n" + new_inner + "\n" + m.group(2) + src[m.end():]
+
+    src = replace_section(src, "category", "\n".join(cat_parts))
+    src = replace_section(src, "sellpoint", "\n\n".join(sp_parts))
+    src = src.replace(
+        "从卖点表格第 20 行起、纵向至 F 列的全部卖点，完整保留文案与参考图。每行左侧第一张为",
+        "按新版验收标准表格横向逐行制作：每一行即为一个完整的卖点框架，左至右依次为验收要求与对应参考图素材。每行第一张为"
+    )
+    Path(html_file).write_text(src, encoding="utf-8")
+    print(f"[完成] 新版 Excel 重建：细分类别 {len(cat_parts)} 个，卖点框架 {len(sp_parts)} 个，内嵌图 {sum(len(v) for v in images.values())} 张")
+    return len(sp_parts)
 
 
 # ---------------------------------------------------------------- HTML 更新
@@ -349,7 +521,11 @@ def main():
                     args.pdf = str(pc[0])
 
     if xlsx:
-        update_html(xlsx, dry_run=args.dry_run)
+        # 新版 Excel（含内嵌卖点图）走整体重建，兼容旧版仅文案更新
+        if xlsx_drawing_row_map(xlsx):
+            rebuild_sections_from_xlsx(xlsx, html_file=HTML_FILE) if not args.dry_run else print("[dry-run] 新版 Excel 重建（含内嵌图）")
+        else:
+            update_html(xlsx, dry_run=args.dry_run)
     if not args.dry_run:
         if args.zip:
             add_gallery_from_zip(args.zip)

@@ -231,6 +231,71 @@ def _position_target(src: Path, position):
     return ROOT / "source" / "misc" / src.name
 
 
+def _position_guess(src: Path):
+    """直传文件自动归类：按扩展名推断更新位置"""
+    ext = src.suffix.lower()
+    if ext == ".pdf":
+        return "standard"
+    if ext in (".xlsx", ".xls"):
+        return "sellpoint"
+    if ext == ".zip":
+        return "gallery"
+    return "other"
+
+
+def process_direct_uploads():
+    """处理直传文件：会员直接在 GitHub 上传页把文件拖入 data/inbox（无 meta 申请单），
+    按扩展名自动归类到 source/ 并重建网页，写通知给超级管理员与所有管理员。"""
+    if not INBOX_DIR.exists():
+        return 0
+    # 已被 meta 申请引用的文件名，跳过（避免与审核流程重复处理）
+    claimed = set()
+    for f in INBOX_DIR.glob("*.json"):
+        try:
+            meta = json.loads(f.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        for fn in meta.get("files", []):
+            claimed.add(str(fn).strip())
+
+    n = 0
+    for f in sorted(INBOX_DIR.iterdir()):
+        if not f.is_file() or f.suffix.lower() == ".json":
+            continue
+        if f.name in claimed:
+            continue
+        position = _position_guess(f)
+        dst = _position_target(f, position)
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(str(f), str(dst))
+        # 写历史与通知（无申请人信息则通知管理员）
+        add_history({
+            "kind": "direct_upload", "applicant": "(直传)", "reviewer": "系统",
+            "action": "apply", "file": f.name, "position": position,
+            "detail": f"直传文件 {f.name} 自动归类为 {position}，已应用并重建网页",
+        })
+        print(f"[direct] {f.name} -> {dst.name} ({position})")
+        n += 1
+        move_to_archive(f, ARC_INBOX)
+    if n:
+        _rebuild_site()
+        for adm in _admins():
+            notify(adm, "system", "网页已自动更新",
+                   f"收到 {n} 个直传文件，已自动归类并更新网页。可前往查看最新内容。")
+    return n
+
+
+def _admins():
+    users = load_json(USERS, {})
+    out = []
+    for nick, info in users.items():
+        if isinstance(info, dict) and info.get("role") == "admin":
+            out.append(nick)
+    if not out:
+        out = ["yingchenDong"]
+    return out
+
+
 def _rebuild_site():
     """运行 update_site.py 重建 index.html（source/ 有新文件时）"""
     script = ROOT / "tools" / "update_site.py"
@@ -283,6 +348,8 @@ def main():
         total += process_registrations()
     if args.all or args.decisions:
         total += process_decisions()
+    if args.all:
+        total += process_direct_uploads()
     print(f"collab: processed {total} item(s)")
 
 
