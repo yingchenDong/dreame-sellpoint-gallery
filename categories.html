@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>细分类别 · 渲染验收参考 · DREAME 扫地机 BU</title>
+<style>
+
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0c;--panel:#121216;--panel2:#17171d;--gold:#c9a45c;--gold2:#e6c98a;--text:#e8e6e1;--muted:#9a968d;--line:rgba(201,164,92,.18)}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1240px;margin:0 auto;padding:0 28px}
+
+/* Hero */
+header.hero{padding:140px 0 80px;position:relative;overflow:hidden;background:radial-gradient(ellipse at 70% 20%,rgba(201,164,92,.14),transparent 55%),radial-gradient(ellipse at 20% 80%,rgba(201,164,92,.06),transparent 50%)}
+header.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.5}
+.hero .logo{height:52px;width:auto;margin-bottom:32px;filter:drop-shadow(0 0 22px rgba(201,164,92,.35))}
+.hero h1{font-size:42px;font-weight:800;letter-spacing:2px;line-height:1.25}
+.hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--gold),var(--gold2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .sub{margin-top:20px;color:var(--muted);font-size:15px;max-width:720px}
+.hero .back{margin-top:28px;display:inline-block;font-size:13px;letter-spacing:1px;color:var(--gold);border:1px solid var(--line);padding:8px 18px;border-radius:100px;transition:border-color .25s,color .25s}
+.hero .back:hover{border-color:rgba(201,164,92,.5);color:var(--gold2)}
+
+/* Blocks */
+main{padding:70px 0 90px}
+.cat-block{display:grid;grid-template-columns:30% 70%;gap:0;background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:26px;transition:border-color .3s}
+.cat-block:hover{border-color:rgba(201,164,92,.35)}
+.cat-left{padding:30px 28px;border-right:1px solid rgba(255,255,255,.05);min-width:0}
+.cat-dim{display:inline-block;font-size:11px;letter-spacing:2px;color:var(--gold);border:1px solid var(--line);border-radius:100px;padding:3px 12px;margin-bottom:16px}
+.cat-left h3{font-size:24px;font-weight:800;letter-spacing:1px;margin-bottom:18px}
+.cat-left ul{list-style:none}
+.cat-left li{font-size:12.5px;color:#a89f8d;padding:7px 0 7px 18px;position:relative;line-height:1.65}
+.cat-left li::before{content:"";position:absolute;left:0;top:14px;width:5px;height:5px;background:var(--gold);border-radius:50%;opacity:.7}
+.cat-right{padding:20px;min-width:0}
+.masonry{columns:4;column-gap:14px}
+.m-item{break-inside:avoid;margin-bottom:14px;border-radius:10px;overflow:hidden;cursor:zoom-in;background:#000;border:1px solid rgba(255,255,255,.06);transition:border-color .3s}
+.m-item:hover{border-color:rgba(201,164,92,.45)}
+.m-item img{width:100%;height:auto;display:block;transition:transform .35s}
+.m-item:hover img{transform:scale(1.03)}
+
+/* Lightbox */
+.lb{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;flex-direction:column;padding:30px}
+.lb.open{display:flex}
+.lb img{max-width:92vw;max-height:82vh;border-radius:8px;box-shadow:0 20px 80px rgba(0,0,0,.8)}
+.lb .cap{margin-top:16px;color:var(--muted);font-size:13px;letter-spacing:1px}
+.lb .close{position:absolute;top:22px;right:30px;font-size:30px;color:#ccc;cursor:pointer;background:none;border:none}
+.lb .nav-btn{position:absolute;top:50%;transform:translateY(-50%);font-size:36px;color:#ccc;cursor:pointer;background:none;border:none;padding:10px 16px}
+.lb .nav-btn.prev{left:20px}
+.lb .nav-btn.next{right:20px}
+
+/* Reveal */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s ease}
+.reveal.in{opacity:1;transform:none}
+
+footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.05);text-align:center;color:var(--muted);font-size:12.5px;letter-spacing:1px}
+
+@media (max-width:1000px){.cat-block{grid-template-columns:1fr}.cat-left{border-right:none;border-bottom:1px solid rgba(255,255,255,.05)}.masonry{columns:3}}
+@media (max-width:640px){.masonry{columns:2}.hero h1{font-size:30px}}
+
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <img class="logo" src="ref_assets/logo_dreame_gold.png" alt="DREAME">
+    <h1>细分类别 <em>· 渲染验收参考</em></h1>
+    <p class="sub">从环境清晰度与细节开始，汇集毛发碎屑、液体脏污、宠物、地毯、主机、基站、双圆盘、滚筒履带、滚刷、边刷、全能基站透显、机器光影、环境光影、投影、激光、场景参考 16 个类别的完整验收细则与参考图，点击任意图片可放大查看。</p>
+    <a class="back" href="index.html">← 返回卖点参考总览</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="cat-block reveal" id="row_02" data-search="毛发碎屑 环境清晰度与细节">
+    <div class="cat-left">
+<div class="cat-dim">环境清晰度与细节</div>      <h3>毛发碎屑</h3>
+      <ul><li>应用场景：地毯、地面、与滚刷结合表达卖点</li><li>毛发清晰，质感真实，与滚刷刷毛质感区分开</li><li>避免纯灰尘等单一形式碎屑，组合出现视觉更丰富</li></ul>
+    </div>
+    <div class="cat-right">
+      <div class="masonry">
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_02/1.jpeg" loading="lazy" alt="毛发碎屑"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_02/2.jpeg" loading="lazy" alt="毛发碎屑"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_02/3.jpeg" loading="lazy" alt="毛发碎屑"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_02/4.jpeg" loading="lazy" alt="毛发碎屑"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_02/5.jpeg" loading="lazy" alt="毛发碎屑"></div>
+      </div>
+    </div>
+  </div>
+  <div class="cat-block reveal" id="row_03" data-search="液体脏污 ">
+    <div class="cat-left">
+      <h3>液体脏污</h3>
+      <ul><li>应用场景：拖地（脏咖啡、脏水、脏酱油/常用污渍）</li><li>液体质感明确，边缘形态有机，通过反光、高光等明暗关系刻画</li><li>液体面积、造型等需把控，避免过分脏污</li></ul>
+    </div>
+    <div class="cat-right">
+      <div class="masonry">
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_03/1.jpeg" loading="lazy" alt="液体脏污"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_03/2.jpeg" loading="lazy" alt="液体脏污"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_03/3.jpeg" loading="lazy" alt="液体脏污"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_03/4.jpeg" loading="lazy" alt="液体脏污"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_03/5.jpeg" loading="lazy" alt="液体脏污"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_03/6.jpeg" loading="lazy" alt="液体脏污"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_03/7.jpeg" loading="lazy" alt="液体脏污"></div>
+      </div>
+    </div>
+  </div>
+  <div class="cat-block reveal" id="row_04" data-search="宠物 ">
+    <div class="cat-left">
+      <h3>宠物</h3>
+      <ul><li>应用场景：互动场景，宠物出现可以让毛发、避障相关卖点更自然</li><li>宠物选择应当符合大部分人审美，寻找最大公约数，可爱/悠闲/活泼/毛发润泽等 避免小众品种或无毛发宠物</li><li>通过视角、动态等暗示卖点，是画面的第一/二视觉中心</li></ul>
+    </div>
+    <div class="cat-right">
+      <div class="masonry">
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_04/1.jpeg" loading="lazy" alt="宠物"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_04/2.jpeg" loading="lazy" alt="宠物"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_04/3.jpeg" loading="lazy" alt="宠物"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_04/4.jpeg" loading="lazy" alt="宠物"></div>
+      </div>
+    </div>
+  </div>
+  <div class="cat-block reveal" id="row_05" data-search="地毯 ">
+    <div class="cat-left">
+      <h3>地毯</h3>
+      <ul><li>应用场景：三抬升、大吸力、滚刷等</li><li>类型分长、中、短毛地毯，中长毛更常见更能体现抬升、吸力等卖点需求</li><li>地毯毛发需清晰可见，根根分明，质感柔顺</li></ul>
+    </div>
+    <div class="cat-right">
+      <div class="masonry">
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_05/1.jpeg" loading="lazy" alt="地毯"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_05/2.jpeg" loading="lazy" alt="地毯"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_05/3.jpeg" loading="lazy" alt="地毯"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_05/4.jpeg" loading="lazy" alt="地毯"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_05/5.jpeg" loading="lazy" alt="地毯"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_05/6.jpeg" loading="lazy" alt="地毯"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_05/7.jpeg" loading="lazy" alt="地毯"></div>
+      </div>
+    </div>
+  </div>
+  <div class="cat-block reveal" id="row_06" data-search="主机 产品质感">
+    <div class="cat-left">
+<div class="cat-dim">产品质感</div>      <h3>主机</h3>
+      <ul><li>视觉中心</li><li>沉稳色调，明暗交界线过渡层次丰富，避免纯白和死黑</li><li>避免明显的廉价塑料质感，通过丝印、双圆盘/滚筒、金属等提高画面精致度</li><li>场景环境需兼容黑白两色机型，避免某配色在场景中生硬</li></ul>
+    </div>
+    <div class="cat-right">
+      <div class="masonry">
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_06/1.jpeg" loading="lazy" alt="主机"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_06/2.jpeg" loading="lazy" alt="主机"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_06/3.jpeg" loading="lazy" alt="主机"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_06/4.jpeg" loading="lazy" alt="主机"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_06/5.jpeg" loading="lazy" alt="主机"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_06/6.jpeg" loading="lazy" alt="主机"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_06/7.jpeg" loading="lazy" alt="主机"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_06/8.jpeg" loading="lazy" alt="主机"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_06/9.jpeg" loading="lazy" alt="主机"></div>
+      </div>
+    </div>
+  </div>
+  <div class="cat-block reveal" id="row_07" data-search="基站 ">
+    <div class="cat-left">
+      <h3>基站</h3>
+      <ul><li>视觉中心</li><li>沉稳色调，明暗交界线过渡层次丰富，避免纯白和死黑</li><li>cmf质感强烈，作为kv出现需通过打光营造氛围和高级感</li></ul>
+    </div>
+    <div class="cat-right">
+      <div class="masonry">
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_07/1.jpeg" loading="lazy" alt="基站"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_07/2.jpeg" loading="lazy" alt="基站"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_07/3.jpeg" loading="lazy" alt="基站"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_07/4.jpeg" loading="lazy" alt="基站"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_07/5.jpeg" loading="lazy" alt="基站"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_07/6.jpeg" loading="lazy" alt="基站"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_07/7.jpeg" loading="lazy" alt="基站"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_07/8.jpeg" loading="lazy" alt="基站"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_07/9.jpeg" loading="lazy" alt="基站"></div>
+      </div>
+    </div>
+  </div>
+  <div class="cat-block reveal" id="row_08" data-search="双圆盘 ">
+    <div class="cat-left">
+      <h3>双圆盘</h3>
+      <ul><li>毛发纤维清晰可见，避免低分辨率糊在一起</li><li>毛发发量蓬松有厚度，用料扎实</li></ul>
+    </div>
+    <div class="cat-right">
+      <div class="masonry">
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_08/1.jpeg" loading="lazy" alt="双圆盘"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_08/2.jpeg" loading="lazy" alt="双圆盘"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_08/3.jpeg" loading="lazy" alt="双圆盘"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_08/4.jpeg" loading="lazy" alt="双圆盘"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_08/5.jpeg" loading="lazy" alt="双圆盘"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_08/6.jpeg" loading="lazy" alt="双圆盘"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_08/7.jpeg" loading="lazy" alt="双圆盘"></div>
+      </div>
+    </div>
+  </div>
+  <div class="cat-block reveal" id="row_09" data-search="滚筒履带 ">
+    <div class="cat-left">
+      <h3>滚筒履带</h3>
+      <ul><li>毛发纤维清晰可见，避免低分辨率糊在一起</li><li>毛发发量蓬松有厚度，用料扎实</li><li>需经常通过透显效果表现，避免因角度问题含糊不清</li></ul>
+    </div>
+    <div class="cat-right">
+      <div class="masonry">
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_09/1.jpeg" loading="lazy" alt="滚筒履带"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_09/2.jpeg" loading="lazy" alt="滚筒履带"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_09/3.jpeg" loading="lazy" alt="滚筒履带"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_09/4.jpeg" loading="lazy" alt="滚筒履带"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_09/5.jpeg" loading="lazy" alt="滚筒履带"></div>
+      </div>
+    </div>
+  </div>
+  <div class="cat-block reveal" id="row_10" data-search="滚刷 ">
+    <div class="cat-left">
+      <h3>滚刷</h3>
+      <ul><li>应用场景：毛发、防缠绕等</li><li>滚刷质感避免廉价塑料</li><li>选取角度、透显特效应最大化呈现滚刷造型卖点</li></ul>
+    </div>
+    <div class="cat-right">
+      <div class="masonry">
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_10/1.jpeg" loading="lazy" alt="滚刷"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_10/2.jpeg" loading="lazy" alt="滚刷"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_10/3.jpeg" loading="lazy" alt="滚刷"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_10/4.jpeg" loading="lazy" alt="滚刷"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_10/5.jpeg" loading="lazy" alt="滚刷"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_10/6.jpeg" loading="lazy" alt="滚刷"></div>
+      </div>
+    </div>
+  </div>
+  <div class="cat-block reveal" id="row_11" data-search="边刷 ">
+    <div class="cat-left">
+      <h3>边刷</h3>
+      <ul><li>应用场景：边角清洁</li><li>边刷毛发需根根分明，根部聚拢、尾部自然轻微散开</li><li>高速运转画面边刷刷毛轻微模糊但需保证上述效果</li></ul>
+    </div>
+    <div class="cat-right">
+      <div class="masonry">
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_11/1.jpeg" loading="lazy" alt="边刷"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_11/2.jpeg" loading="lazy" alt="边刷"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_11/3.jpeg" loading="lazy" alt="边刷"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_11/4.jpeg" loading="lazy" alt="边刷"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_11/5.jpeg" loading="lazy" alt="边刷"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_11/6.jpeg" loading="lazy" alt="边刷"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_11/7.jpeg" loading="lazy" alt="边刷"></div>
+      </div>
+    </div>
+  </div>
+  <div class="cat-block reveal" id="row_12" data-search="全能基站透显 ">
+    <div class="cat-left">
+      <h3>全能基站透显</h3>
+      <ul><li>应用场景：全能基站</li><li>透显效果自然，清洁仓等不同区域需合理选择特效颜色</li><li>包含水、蒸汽等特效部分需避免质感生硬</li></ul>
+    </div>
+    <div class="cat-right">
+      <div class="masonry">
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_12/1.jpeg" loading="lazy" alt="全能基站透显"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_12/2.jpeg" loading="lazy" alt="全能基站透显"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_12/3.jpeg" loading="lazy" alt="全能基站透显"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_12/4.jpeg" loading="lazy" alt="全能基站透显"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_12/5.jpeg" loading="lazy" alt="全能基站透显"></div>
+      </div>
+    </div>
+  </div>
+  <div class="cat-block reveal" id="row_13" data-search="机器光影 光影">
+    <div class="cat-left">
+<div class="cat-dim">光影</div>      <h3>机器光影</h3>
+      <ul><li>小范围聚焦机器，光影结构简单</li><li>光影过渡自然，与质感表达相得益彰，避免过度曝光和死黑</li><li>明确的聚光可以凸显视觉中心和卖点，但需把握阴影投影等自然度</li><li>整体色调自然，以明媚为主或凸显品牌调性</li></ul>
+    </div>
+    <div class="cat-right">
+      <div class="masonry">
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_13/1.jpeg" loading="lazy" alt="机器光影"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_13/2.jpeg" loading="lazy" alt="机器光影"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_13/3.jpeg" loading="lazy" alt="机器光影"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_13/4.jpeg" loading="lazy" alt="机器光影"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_13/5.jpeg" loading="lazy" alt="机器光影"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_13/6.jpeg" loading="lazy" alt="机器光影"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_13/7.jpeg" loading="lazy" alt="机器光影"></div>
+      </div>
+    </div>
+  </div>
+  <div class="cat-block reveal" id="row_14" data-search="环境光影 ">
+    <div class="cat-left">
+      <h3>环境光影</h3>
+      <ul><li>大尺度场景，光影层次自由度高</li><li>光影过渡自然，与质感表达相得益彰，避免过度曝光和死黑</li><li>明确的聚光可以凸显视觉中心和卖点，但需把握阴影投影等自然度</li><li>整体色调自然，以明媚为主或凸显品牌调性，预览清晰效果好</li></ul>
+    </div>
+    <div class="cat-right">
+      <div class="masonry">
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_14/1.jpeg" loading="lazy" alt="环境光影"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_14/2.jpeg" loading="lazy" alt="环境光影"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_14/3.jpeg" loading="lazy" alt="环境光影"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_14/4.jpeg" loading="lazy" alt="环境光影"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_14/5.jpeg" loading="lazy" alt="环境光影"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_14/6.jpeg" loading="lazy" alt="环境光影"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_14/7.jpeg" loading="lazy" alt="环境光影"></div>
+      </div>
+    </div>
+  </div>
+  <div class="cat-block reveal" id="row_15" data-search="投影 ">
+    <div class="cat-left">
+      <h3>投影</h3>
+      <ul><li>投影过渡自然，由实到虚有明显的过渡，自然渐淡</li><li>不同物体的投影表达不一样，有漫反射和镜面反射区别</li><li>宁柔和勿生硬，投影黑度需参照画面亮度</li></ul>
+    </div>
+    <div class="cat-right">
+      <div class="masonry">
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_15/1.jpeg" loading="lazy" alt="投影"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_15/2.jpeg" loading="lazy" alt="投影"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_15/3.jpeg" loading="lazy" alt="投影"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_15/4.jpeg" loading="lazy" alt="投影"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_15/5.jpeg" loading="lazy" alt="投影"></div>
+      </div>
+    </div>
+  </div>
+  <div class="cat-block reveal" id="row_16" data-search="激光 ">
+    <div class="cat-left">
+      <h3>激光</h3>
+      <ul><li>激光照射效果需通透，避免无变化的蓝色，渐变标准可参考投影</li><li>暗光环境下氛围和穿搭效果更佳</li><li>特效需精致，避免滥用</li></ul>
+    </div>
+    <div class="cat-right">
+      <div class="masonry">
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_16/1.jpeg" loading="lazy" alt="激光"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_16/2.jpeg" loading="lazy" alt="激光"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_16/3.jpeg" loading="lazy" alt="激光"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_16/4.jpeg" loading="lazy" alt="激光"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_16/5.jpeg" loading="lazy" alt="激光"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_16/6.jpeg" loading="lazy" alt="激光"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_16/7.jpeg" loading="lazy" alt="激光"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_16/8.jpeg" loading="lazy" alt="激光"></div>
+      </div>
+    </div>
+  </div>
+  <div class="cat-block reveal" id="row_17" data-search="场景参考 ">
+    <div class="cat-left">
+      <h3>场景参考</h3>
+      <ul><li>通常情况下场景需考虑不同地区文化的最大公约数</li><li>结合具体卖点、旗舰/中配等因素选择</li></ul>
+    </div>
+    <div class="cat-right">
+      <div class="masonry">
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_17/1.jpeg" loading="lazy" alt="场景参考"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_17/2.jpeg" loading="lazy" alt="场景参考"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_17/3.jpeg" loading="lazy" alt="场景参考"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_17/4.jpeg" loading="lazy" alt="场景参考"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_17/5.jpeg" loading="lazy" alt="场景参考"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_17/6.jpeg" loading="lazy" alt="场景参考"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_17/7.jpeg" loading="lazy" alt="场景参考"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_17/8.jpeg" loading="lazy" alt="场景参考"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_17/9.jpeg" loading="lazy" alt="场景参考"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_17/10.jpeg" loading="lazy" alt="场景参考"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_17/11.jpeg" loading="lazy" alt="场景参考"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_17/12.jpeg" loading="lazy" alt="场景参考"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_17/13.jpeg" loading="lazy" alt="场景参考"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_17/14.jpeg" loading="lazy" alt="场景参考"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_17/15.jpeg" loading="lazy" alt="场景参考"></div>
+      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_17/16.jpeg" loading="lazy" alt="场景参考"></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">DREAME · 扫地机 BU · 细分类别渲染验收参考</div>
+</footer>
+
+<div class="lb" id="lb">
+  <button class="close" id="lbClose">×</button>
+  <button class="nav-btn prev" id="lbPrev">‹</button>
+  <img id="lbImg" src="" alt="">
+  <div class="cap" id="lbCap"></div>
+  <button class="nav-btn next" id="lbNext">›</button>
+</div>
+
+<script>
+(function(){
+  var thumbs = Array.prototype.slice.call(document.querySelectorAll('.m-item img'));
+  var lb = document.getElementById('lb');
+  var lbImg = document.getElementById('lbImg');
+  var lbCap = document.getElementById('lbCap');
+  var idx = 0;
+  function open(i){
+    idx = i;
+    var t = thumbs[idx];
+    lbImg.src = t.currentSrc || t.src;
+    lbCap.textContent = (t.alt || '参考图') + '  ·  ' + (idx+1) + ' / ' + thumbs.length;
+    lb.classList.add('open');
+  }
+  function close(){ lb.classList.remove('open'); }
+  function move(d){ open((idx + d + thumbs.length) % thumbs.length); }
+  thumbs.forEach(function(t, i){ t.parentElement.addEventListener('click', function(){ open(i); }); });
+  document.getElementById('lbClose').addEventListener('click', close);
+  document.getElementById('lbPrev').addEventListener('click', function(e){ e.stopPropagation(); move(-1); });
+  document.getElementById('lbNext').addEventListener('click', function(e){ e.stopPropagation(); move(1); });
+  lb.addEventListener('click', function(e){ if(e.target === lb) close(); });
+  document.addEventListener('keydown', function(e){
+    if(!lb.classList.contains('open')) return;
+    if(e.key === 'Escape') close();
+    if(e.key === 'ArrowLeft') move(-1);
+    if(e.key === 'ArrowRight') move(1);
+  });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, {threshold:.08});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+})();
+</script>
+</body>
+</html>
