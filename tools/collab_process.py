@@ -181,19 +181,26 @@ def _handle_upload_decision(dec, action, reviewer, note):
         if meta:
             files = meta.get("files", [])
             position = str(meta.get("position", "other")).strip()
-            for fn in files:
-                fn = str(fn).strip()
-                src = INBOX_DIR / fn
-                if not src.exists():
-                    continue
-                dst = _position_target(src, position)
-                dst.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copy2(str(src), str(dst))
-                applied_files.append(dst.name)
-                applied += 1
+            kind = str(meta.get("kind", "")).strip()
+            if kind == "sellpoint_img":
+                # 卖点参考图：应用到指定卖点板块（ref_assets/sellpoints/row_XX）并同步 index.html
+                applied_files = _apply_sellpoint_image(meta, dec)
+                applied = len(applied_files)
+            else:
+                for fn in files:
+                    fn = str(fn).strip()
+                    src = INBOX_DIR / fn
+                    if not src.exists():
+                        continue
+                    dst = _position_target(src, position)
+                    dst.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(str(src), str(dst))
+                    applied_files.append(dst.name)
+                    applied += 1
         if applied:
-            # 触发网站重建
-            _rebuild_site()
+            if meta and str(meta.get("kind", "")).strip() != "sellpoint_img":
+                # 触发网站重建（source/ 有新文件时）；卖点参考图已直接写回 index.html，无需重建
+                _rebuild_site()
             notify(applicant, "approved", "审核通过", "你提交的更新已通过审核并应用到网页。")
         else:
             notify(applicant, "approved", "审核通过", "审核已通过，但未在申请中找到可应用的文件，请联系管理员。")
@@ -217,6 +224,166 @@ def _handle_upload_decision(dec, action, reviewer, note):
             p = INBOX_DIR / str(fn).strip()
             if p.exists():
                 move_to_archive(p, ARC_INBOX)
+
+
+# ---------------------------------------------------------------- 卖点参考图
+INDEX_HTML = ROOT / "index.html"
+IMG_EXTS = (".jpg", ".jpeg", ".png", ".webp", ".gif", ".bmp")
+
+
+def _num_of(name):
+    m = re.match(r"^(\d+)(\.(jpe?g|png|webp|gif|bmp))$", name, re.I)
+    return int(m.group(1)) if m else None
+
+
+def _find_div_end(html, start):
+    """从 start（<div ...> 之后）起找配对的 </div> 位置（不返回其长度）。depth 初始为 1 表示起始标签自身。"""
+    depth = 1
+    pos = start
+    pat_open = re.compile(r"<div\b")
+    pat_close = re.compile(r"</div\s*>")
+    while True:
+        mo = pat_open.search(html, pos)
+        mc = pat_close.search(html, pos)
+        if mc is None:
+            return None
+        if mo is not None and mo.start() < mc.start():
+            depth += 1
+            pos = mo.end()
+        else:
+            depth -= 1
+            if depth == 0:
+                return mc.start()
+            pos = mc.end()
+
+
+def _sp_imgs_region(row):
+    """定位 index.html 中指定卖点的图片区：返回 (html, imgs_open_end, imgs_close_start, block_start)
+    找不到返回 None。"""
+    html = INDEX_HTML.read_text(encoding="utf-8")
+    key = f"ref_assets/sellpoints/{row}/"
+    idx = html.find(key)
+    if idx < 0:
+        return None
+    sp_start = html.rfind('<div class="sp', 0, idx)
+    if sp_start < 0:
+        return None
+    imgs_open = html.find('<div class="sp-imgs">', sp_start, idx)
+    if imgs_open < 0:
+        return None
+    imgs_open_end = imgs_open + len('<div class="sp-imgs">')
+    imgs_close = _find_div_end(html, imgs_open_end)
+    if imgs_close is None:
+        return None
+    return html, imgs_open_end, imgs_close, sp_start
+
+
+def _shift_html_row_images(row, delta):
+    """该卖点图片引用编号整体平移 delta（primary 插入时现有图顺延）"""
+    html = INDEX_HTML.read_text(encoding="utf-8")
+    pat = re.compile(r"(ref_assets/sellpoints/%s/)(\d+)(\.jpe?g)" % re.escape(row))
+    new_html, n = pat.subn(lambda m: f"{m.group(1)}{int(m.group(2)) + delta}{m.group(3)}", html)
+    if n:
+        INDEX_HTML.write_text(new_html, encoding="utf-8")
+
+
+def _thumb_html(row, fname, title, primary=False):
+    badge = '<span class="badge key">重点参考图</span>' if primary else '<span class="badge opt">次要参考图</span>'
+    alt = (title or "").replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;")
+    return f'<div class="thumb reveal">{badge}<img src="ref_assets/sellpoints/{row}/{fname}" loading="lazy" alt="{alt}"></div>'
+
+
+def _html_prepend_thumb(row, fname, title):
+    """primary：新图插入图片区第 1 位（重点参考图），原第 1 张徽标降为次要"""
+    reg = _sp_imgs_region(row)
+    if reg is None:
+        print(f"[sellpoint] 未在 index.html 中找到 {row} 的图片区，跳过 HTML 更新")
+        return
+    html, imgs_open_end, _imgs_close, _sp_start = reg
+    head = html[:imgs_open_end]
+    tail = html[imgs_open_end:]
+    new_thumb = _thumb_html(row, fname, title, primary=True)
+    # 原第 1 张徽标 key -> opt
+    tail = tail.replace('<span class="badge key">重点参考图</span>', '<span class="badge opt">次要参考图</span>', 1)
+    html = head + new_thumb + "\n" + tail
+    INDEX_HTML.write_text(html, encoding="utf-8")
+
+
+def _html_append_thumb(row, fname, title):
+    """secondary：新图追加到图片区末尾（次要参考图）"""
+    reg = _sp_imgs_region(row)
+    if reg is None:
+        print(f"[sellpoint] 未在 index.html 中找到 {row} 的图片区，跳过 HTML 更新")
+        return
+    html, _imgs_open_end, imgs_close, _sp_start = reg
+    head = html[:imgs_close]
+    tail = html[imgs_close:]
+    new_thumb = _thumb_html(row, fname, title, primary=False)
+    html = head + new_thumb + "\n" + tail
+    INDEX_HTML.write_text(html, encoding="utf-8")
+
+
+def _apply_sellpoint_image(meta, dec):
+    """卖点参考图申请：图片写入 ref_assets/sellpoints/row_XX/ 并同步 index.html。
+    role=primary 插入第 1 张（现有图顺延，新图标'重点参考图'）；
+    role=secondary 追加末尾（标'次要参考图'）。返回应用的文件名列表。"""
+    applicant = str(dec.get("applicant", "")).strip()
+    role = str(dec.get("role", "secondary")).strip() or "secondary"
+    if role not in ("primary", "secondary"):
+        role = "secondary"
+    target = meta.get("target_sellpoint") or {}
+    row = str(target.get("row", "")).strip()
+    if not re.fullmatch(r"row_\d{2}", row):
+        notify(applicant, "approved", "审核通过", "已通过，但申请中缺少有效的目标板块（row），请重新提交。")
+        return []
+    title = str(target.get("title", "")).strip() or row
+
+    row_dir = ROOT / "ref_assets" / "sellpoints" / row
+    row_dir.mkdir(parents=True, exist_ok=True)
+
+    srcs = []
+    for fn in meta.get("files", []):
+        p = INBOX_DIR / str(fn).strip()
+        if p.is_file() and p.suffix.lower() in IMG_EXTS:
+            srcs.append(p)
+    if not srcs:
+        notify(applicant, "approved", "审核通过", "已通过，但申请中没有找到可应用的图片文件。")
+        return []
+
+    existing = {}
+    for f in row_dir.iterdir():
+        if not f.is_file():
+            continue
+        n = _num_of(f.name)
+        if n:
+            existing.setdefault(n, []).append(f)
+    max_n = max(existing) if existing else 0
+
+    applied = []
+    if role == "primary":
+        if existing:
+            for n in sorted(existing.keys(), reverse=True):
+                for f in existing[n]:
+                    f.rename(row_dir / f"{n + 1}{f.suffix}")
+        dst_main = row_dir / "1.jpeg"
+        dst_dup = row_dir / "1.jpg"
+        shutil.copy2(str(srcs[0]), str(dst_main))
+        shutil.copy2(str(srcs[0]), str(dst_dup))
+        applied.append("1.jpeg")
+        if existing:
+            _shift_html_row_images(row, +1)
+        _html_prepend_thumb(row, "1.jpeg", title)
+    else:
+        new_n = max_n + 1
+        dst_main = row_dir / f"{new_n}.jpeg"
+        dst_dup = row_dir / f"{new_n}.jpg"
+        shutil.copy2(str(srcs[0]), str(dst_main))
+        shutil.copy2(str(srcs[0]), str(dst_dup))
+        applied.append(f"{new_n}.jpeg")
+        _html_append_thumb(row, f"{new_n}.jpeg", title)
+
+    print(f"[sellpoint] {row} role={role} 应用图片 -> {applied}")
+    return applied
 
 
 def _position_target(src: Path, position):

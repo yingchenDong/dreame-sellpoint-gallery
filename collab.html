@@ -166,6 +166,20 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
 .cf textarea{resize:vertical;min-height:76px}
 .cf input[type=file]{font-size:13px;color:var(--muted)}
 .cf input[type=file]::file-selector-button{background:rgba(201,164,92,.12);border:1px solid var(--line);color:var(--gold2);border-radius:8px;padding:7px 14px;margin-right:10px;cursor:pointer;font-size:13px}
+.cf input[type=radio]{accent-color:var(--gold)}
+.role-opts{display:flex;gap:10px;margin:10px 0 4px;flex-wrap:wrap}
+.role-opts label{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--text);cursor:pointer;border:1px solid var(--line);border-radius:8px;padding:8px 12px;background:rgba(255,255,255,.03)}
+.role-opts label input{margin:0}
+.role-opts label.on{border-color:rgba(201,164,92,.6);color:var(--gold2);background:rgba(201,164,92,.08)}
+.rev-preview{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 12px}
+.rev-preview img{width:96px;height:auto;border-radius:8px;border:1px solid var(--line);cursor:zoom-in;background:#000}
+.rev-meta{font-size:12.5px;color:var(--muted);margin:4px 0 8px}
+.rev-meta b{color:var(--gold2)}
+.gen-box{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px;margin:12px 0;text-align:left}
+.gen-box .gb-t{font-size:12px;color:var(--muted);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.gen-box textarea{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:12px;padding:10px;font-family:ui-monospace,Menlo,monospace;resize:vertical;min-height:110px;outline:none}
+.gen-box .gb-actions{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
+.gen-box .gb-actions .cbtn{text-decoration:none}
 .cf-row{display:flex;gap:10px}
 .cf-row>*{flex:1}
 .cbtn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(120deg,#8a6a2f,#c9a45c);color:#14100a;font-weight:700;font-size:14px;letter-spacing:1px;padding:12px 22px;border-radius:10px;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;font-family:inherit}
@@ -337,10 +351,17 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
           <div>
             <label>更新内容类型</label>
             <select id="upPosition">
+              <option value="sellpoint_img">卖点参考图（更新指定卖点板块的参考图）</option>
               <option value="sellpoint">卖点参考（Excel 验收标准）</option>
               <option value="standard">核心验收标准（PDF）</option>
               <option value="gallery">标杆图库（图片压缩包）</option>
               <option value="other">其他 / 综合更新</option>
+            </select>
+          </div>
+          <div id="upSellpointWrap">
+            <label>选择更新板块（上传卖点参考图时必选）</label>
+            <select id="upSellpoint">
+              <option value="">-- 请选择卖点板块 --</option>
             </select>
           </div>
           <div>
@@ -349,9 +370,9 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
           </div>
           <div>
             <label>选择要上传的文件</label>
-            <input type="file" id="upFiles" multiple>
+            <input type="file" id="upFiles" multiple accept="image/*,.pdf">
           </div>
-          <button class="cbtn" id="btnUpload">上传到系统</button>
+          <button class="cbtn" id="btnUpload">生成申请单并提交</button>
           <div class="cstatus" id="upStatus"></div>
         </div>
         <div class="collab-note" id="upNote" style="display:none"></div>
@@ -405,6 +426,34 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
   var API = 'https://api.github.com/repos/' + REPO + '/contents/';
   var UPLOAD_URL = 'https://github.com/' + REPO + '/upload/main/';
   var SKEY = 'dreame_collab_session';
+  // 25 个卖点板块（编号 idx 对应首页卖点区 sp-idx，row 为图片目录 ref_assets/sellpoints/row_XX）
+  var SELLPOINTS = [
+    {"idx":1,"row":"row_18","title":"蒸汽拖地：气体效果真实、产品结构清晰"},
+    {"idx":2,"row":"row_19","title":"双极致外扩：机械臂伸展功能清晰"},
+    {"idx":3,"row":"row_20","title":"双圆盘/滚筒/履带外扩"},
+    {"idx":4,"row":"row_21","title":"电热拖"},
+    {"idx":5,"row":"row_22","title":"活水清洁"},
+    {"idx":6,"row":"row_23","title":"抹布抬升：注意体现抹布和地面的距离"},
+    {"idx":7,"row":"row_24","title":"滚筒遮罩"},
+    {"idx":8,"row":"row_25","title":"机械臂"},
+    {"idx":9,"row":"row_26","title":"热水洗 核心关键词：直观清晰"},
+    {"idx":10,"row":"row_27","title":"吸力"},
+    {"idx":11,"row":"row_28","title":"拖地（重点表现拖地的效果）"},
+    {"idx":12,"row":"row_29","title":"越障（重点在于表达越障的高度）"},
+    {"idx":13,"row":"row_30","title":"低矮空间/低矮空间物品识别/lds下降"},
+    {"idx":14,"row":"row_31","title":"边角清洁"},
+    {"idx":15,"row":"row_32","title":"避障：核心为卖点突出"},
+    {"idx":16,"row":"row_33","title":"蓝光"},
+    {"idx":17,"row":"row_34","title":"超长续航"},
+    {"idx":18,"row":"row_35","title":"宠物友好"},
+    {"idx":19,"row":"row_36","title":"集尘-全能基站（集尘）"},
+    {"idx":20,"row":"row_37","title":"热风烘干：核心表现烘干"},
+    {"idx":21,"row":"row_38","title":"集尘：重点表现集尘功能以及尘土的质感"},
+    {"idx":22,"row":"row_39","title":"超薄基站：充分体现基站机身薄这一概念，适配现代家装。"},
+    {"idx":23,"row":"row_40","title":"不同区域，卖点直观明了"},
+    {"idx":24,"row":"row_41","title":"主图（kv)A面"},
+    {"idx":25,"row":"row_42","title":"主图（kv)A面"}
+  ];
   var session = null;
   try { session = JSON.parse(localStorage.getItem(SKEY) || 'null'); } catch(e){ session = null; }
 
@@ -522,10 +571,20 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
         note: '网页注册申请'
       };
       var fname = 'reg_' + tsStr() + '_' + nick + '.json';
-      download(fname, JSON.stringify(reg, null, 2));
-      setStatus(st, '注册申请已生成并自动下载：' + fname, 'ok');
+      var contentStr = JSON.stringify(reg, null, 2);
+      setStatus(st, '注册申请已生成', 'ok');
       $c('regNote').style.display = 'block';
-      $c('regNote').innerHTML = '请把下载的 <b>' + fname + '</b> 文件上传到仓库 <code>data/registrations/</code> 目录完成注册（约 1-2 分钟自动生效）。<br><br>👉 <a class="up-btn" style="display:inline-block" href="' + UPLOAD_URL + 'data/registrations" target="_blank" rel="noopener">打开上传页</a>（把下载的注册文件拖进去，点 Commit changes）';
+      $c('regNote').innerHTML =
+        '请把注册申请文件上传到仓库 <code>data/registrations/</code> 完成注册，管理员审核通过后约 1-2 分钟自动生效，你会在“通知”里收到结果。<br><br>'
+        + '<div class="gen-box"><div class="gb-t"><span>注册申请文件 <b>' + fname + '</b></span></div>'
+        + '<textarea readonly id="regGenContent"></textarea>'
+        + '<div class="gb-actions">'
+        + '<button class="cbtn small" id="regDlBtn">保存申请文件</button>'
+        + '<a class="cbtn small ghost" href="' + UPLOAD_URL + 'data/registrations" target="_blank" rel="noopener">打开上传页</a>'
+        + '</div></div>'
+        + '<p style="font-size:12px;color:var(--muted)">在 GitHub 上传页把上面保存的申请文件拖入并点 Commit changes 即可。</p>';
+      $c('regGenContent').value = contentStr;
+      $c('regDlBtn').onclick = function(){ download(fname, contentStr); };
       $c('regNick').value = ''; $c('regPass').value = ''; $c('regPass2').value = '';
     });
   }
@@ -566,19 +625,44 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
     var files = $c('upFiles').files;
     if(!content){ setStatus($c('upStatus'), '请填写改动内容说明', 'err'); return; }
     if(!files || !files.length){ setStatus($c('upStatus'), '请选择要上传的文件', 'err'); return; }
+    var target = null;
+    if(position === 'sellpoint_img' || position === 'sellpoint'){
+      var sv = $c('upSellpoint').value;
+      if(!sv){ setStatus($c('upStatus'), '请选择要更新的卖点板块', 'err'); return; }
+      var si = parseInt(sv, 10);
+      target = SELLPOINTS[si - 1];
+    }
     var fnames = [];
     for(var i=0;i<files.length;i++){
       fnames.push(files[i].name);
     }
-    setStatus($c('upStatus'), '正在打开系统上传页，请把要上传的文件拖入并提交', 'ok');
+    var meta = {
+      id: newId(),
+      applicant: session.nick,
+      position: position,
+      kind: (position === 'sellpoint_img') ? 'sellpoint_img' : (position === 'sellpoint' ? 'sellpoint_xlsx' : null),
+      target_sellpoint: target ? {idx: target.idx, row: target.row, title: target.title} : null,
+      content: content,
+      files: fnames,
+      time: nowIso()
+    };
+    var fname = 'up_' + tsStr() + '_' + session.nick + '.json';
+    var contentStr = JSON.stringify(meta, null, 2);
+    setStatus($c('upStatus'), '申请单已生成，请把申请单和图片一起提交到上传页', 'ok');
     $c('upNote').style.display = 'block';
     $c('upNote').innerHTML =
-      '<b>已为您打开系统上传页</b>，接下来请：<br>'
-      + '1️⃣ 把本机要上传的 <b>' + fnames.length + ' 个文件</b>（' + esc(fnames.join('、')) + '）拖入页面<br>'
-      + '2️⃣ 在底部 Commit 信息里粘贴改动说明：<b>' + esc(content) + '</b><br>'
-      + '3️⃣ 点击 <b>Commit changes</b> 提交<br><br>'
-      + '提交后后台会自动处理并更新网页，进度与结果会以通知形式回传给你，全程无需下载任何文件。'
-      + '<br><br>👉 <a class="up-btn" style="display:inline-block" href="' + UPLOAD_URL + 'data/inbox" target="_blank" rel="noopener" id="upGoBtn">打开上传页</a>';
+      '<b>申请单已生成（编号 ' + esc(meta.id) + '）</b><br>'
+      + '请把<b>申请单文件</b>和你选择的 <b>' + fnames.length + ' 个文件</b>（' + esc(fnames.join('、')) + '）一起拖入上传页并提交。<br>'
+      + '后台将按申请单自动把图片应用到对应板块，管理员审核通过后网页自动更新，结果会以通知回传。全程不需要下载任何已有文件。'
+      + '<div class="gen-box"><div class="gb-t"><span>申请单文件 <b>' + fname + '</b>（含目标板块：' + (target ? '#' + pad2(target.idx) + ' ' + esc(target.title) : '（未指定板块）') + '）</span></div>'
+      + '<textarea readonly id="upGenContent"></textarea>'
+      + '<div class="gb-actions">'
+      + '<button class="cbtn small" id="upDlBtn">保存申请单</button>'
+      + '<a class="cbtn small ghost" href="' + UPLOAD_URL + 'data/inbox" target="_blank" rel="noopener">打开上传页</a>'
+      + '</div></div>'
+      + '<p style="font-size:12px;color:var(--muted)">在 GitHub 上传页把申请单和图片一起拖入，点 Commit changes 提交。</p>';
+    $c('upGenContent').value = contentStr;
+    $c('upDlBtn').onclick = function(){ download(fname, contentStr); };
     $c('upContent').value = '';
     $c('upFiles').value = '';
   }
@@ -614,20 +698,49 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
   function renderReview(metas, box){
     if(!metas.length){ box.innerHTML = '<div class="empty-tip">暂无待审申请</div>'; return; }
     var html = '';
-    var posName = {standard:'核心验收标准', sellpoint:'卖点文案', gallery:'标杆图库', other:'其他 / 综合'};
+    var posName = {standard:'核心验收标准', sellpoint:'卖点参考（Excel）', sellpoint_img:'卖点参考图', gallery:'标杆图库', other:'其他 / 综合'};
+    var RAW = API; // 图片预览用 raw 域名，静态文件
     metas.forEach(function(m){
+      var spInfo = '';
+      if(m.target_sellpoint){
+        spInfo = '<div class="rev-meta">目标板块：<b>#' + pad2(m.target_sellpoint.idx) + ' ' + esc(m.target_sellpoint.title || '') + '</b>（图片目录 ' + esc(m.target_sellpoint.row || '') + '）</div>';
+      }
+      var preview = '';
+      var imgFiles = (m.files || []).filter(function(f){ return !/\.json$/i.test(f); });
+      if(imgFiles.length){
+        preview = '<div class="rev-preview">' + imgFiles.map(function(f){
+          return '<img src="https://raw.githubusercontent.com/' + REPO + '/main/data/inbox/' + encodeURIComponent(f) + '" alt="' + esc(f) + '" title="' + esc(f) + '" loading="lazy" onerror="this.style.opacity=.25">';
+        }).join('') + '</div>';
+      }
+      var roleOpts = '';
+      if(m.kind === 'sellpoint_img' || m.target_sellpoint){
+        roleOpts = '<div class="role-opts" data-rolebox="1">'
+          + '<label class="on"><input type="radio" name="role_' + esc(m.id) + '" value="primary" checked> 设为首要参考图（排第 1 张，标“重点参考图”）</label>'
+          + '<label><input type="radio" name="role_' + esc(m.id) + '" value="secondary"> 设为次要参考图（追加到末尾，标“次要参考图”）</label>'
+          + '</div>';
+      }
       html += '<div class="rev-item">'
         + '<div class="rev-top"><b>' + esc(m.applicant || '未知申请人') + '</b>'
         + '<span class="rev-idx">' + esc(m.id || '') + '</span>'
         + '<span class="rev-pos">改动位置：' + (posName[m.position] || '其他') + ' · <span>' + esc((m.time||'').slice(0,16)) + '</span></span></div>'
+        + spInfo
         + '<div class="rev-body">' + esc(m.content || '未填写改动说明') + '</div>'
+        + preview
         + '<div class="rev-files"><b>文件：</b>' + esc((m.files||[]).join('、')) + '</div>'
+        + roleOpts
         + '<div class="rev-actions">'
         + '<button class="cbtn small" data-act="approve" data-id="' + esc(m.id) + '" data-app="' + esc(m.applicant) + '">✓ 通过</button>'
         + '<button class="cbtn small ghost danger" data-act="reject" data-id="' + esc(m.id) + '" data-app="' + esc(m.applicant) + '">✕ 拒绝</button>'
         + '</div></div>';
     });
     box.innerHTML = html;
+    box.querySelectorAll('.role-opts label').forEach(function(lb){
+      lb.addEventListener('click', function(){
+        var box2 = lb.parentElement;
+        box2.querySelectorAll('label').forEach(function(x){ x.classList.remove('on'); });
+        lb.classList.add('on');
+      });
+    });
     box.querySelectorAll('button[data-act]').forEach(function(btn){
       btn.addEventListener('click', function(){
         reviewAction(btn.getAttribute('data-act'), btn.getAttribute('data-id'), btn.getAttribute('data-app'));
@@ -635,15 +748,32 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
     });
   }
   function reviewAction(action, id, applicant){
+    var m = null;
+    if(pendingCache.list){ m = pendingCache.list.filter(function(x){ return x.id === id; })[0] || null; }
+    var isSellImg = m && (m.kind === 'sellpoint_img' || m.target_sellpoint);
+    var roleHtml = '';
+    if(action === 'approve' && isSellImg){
+      roleHtml = '<div class="role-opts" data-rolebox="1" style="margin-top:12px">'
+        + '<label class="on"><input type="radio" name="rrole" value="primary" checked> 设为首要参考图（排第 1 张，标“重点参考图”）</label>'
+        + '<label><input type="radio" name="rrole" value="secondary"> 设为次要参考图（追加到末尾，标“次要参考图”）</label>'
+        + '</div>';
+    }
     var title = action === 'approve' ? '确认通过该申请？' : '确认拒绝该申请？';
     var html = '<p>申请人：<b style="color:var(--gold2)">' + esc(applicant) + '</b></p>'
       + '<p>申请编号：' + esc(id) + '</p>'
-      + '<p>通过后文件将应用到网页；拒绝则网页不变，申请人会收到拒绝通知。</p>'
+      + (m && m.target_sellpoint ? '<p>目标板块：<b style="color:var(--gold2)">#' + pad2(m.target_sellpoint.idx) + ' ' + esc(m.target_sellpoint.title || '') + '</b>（' + esc(m.target_sellpoint.row || '') + '）</p>' : '')
+      + '<p>' + (action === 'approve' ? '通过后图片将应用到对应板块并自动更新网页；' : '拒绝后网页保持不变，') + '申请人会收到通知。</p>'
+      + roleHtml
       + '<div class="m-note">如需给申请人留言，请把留言写在下方：<br><input type="text" id="revNote" placeholder="选填，将随结果通知申请人" style="width:100%;background:var(--panel);border:1px solid var(--line);border-radius:8px;color:var(--text);padding:9px 12px;margin-top:8px;font-size:13px;font-family:inherit"></div>';
     showModal(title, html, [
       {label: '取消', cls: 'ghost', onClick: function(){}},
       {label: action === 'approve' ? '确认通过' : '确认拒绝', cls: action === 'approve' ? '' : 'danger', onClick: function(){
         var note = ($c('revNote') ? $c('revNote').value : '').trim();
+        var role = 'secondary';
+        if(action === 'approve' && isSellImg){
+          var rb = document.querySelector('.cmodal .role-opts input[name=rrole]:checked');
+          role = rb ? rb.value : 'secondary';
+        }
         var dec = {
           id: id,
           applicant: applicant,
@@ -653,17 +783,44 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
           note: note,
           time: nowIso()
         };
+        if(m){
+          if(m.kind) dec.kind = m.kind;
+          if(m.target_sellpoint) dec.target_sellpoint = m.target_sellpoint;
+          if(isSellImg) dec.role = role;
+          if(m.files) dec.files = m.files;
+        }
         var fname = id + '.decision.json';
-        download(fname, JSON.stringify(dec, null, 2));
+        var contentStr = JSON.stringify(dec, null, 2);
+        closeModal();
         showModal(
           (action === 'approve' ? '已同意' : '已拒绝') + ' 申请人 ' + esc(applicant) + ' 的请求',
-          '<p>审核决定文件 <b style="color:var(--gold2)">' + fname + '</b> 已生成并下载。</p>'
-          + '<p>上传该文件到仓库 <code>data/decisions/</code> 后即自动生效并通知申请人；老板可让 Marvis 直接处理，无需上传。</p>'
-          + '<p style="margin-top:8px"><a class="cbtn small" href="' + UPLOAD_URL + 'data/decisions" target="_blank" rel="noopener">打开上传页</a></p>',
+          '<p>审核决定文件 <b style="color:var(--gold2)">' + fname + '</b> 已生成'
+          + (isSellImg ? '（角色：<b style="color:var(--gold2)">' + (role === 'primary' ? '首要参考图' : '次要参考图') + '</b>）' : '')
+          + '。</p>'
+          + '<p>上传该文件到仓库 <code>data/decisions/</code> 后即自动生效并通知申请人，网页将自动更新；也可让 Marvis 直接处理，无需上传。</p>'
+          + '<div class="gen-box" style="margin-top:10px"><div class="gb-t"><span>审核决定（' + fname + '）</span></div>'
+          + '<textarea readonly id="decGenContent"></textarea>'
+          + '<div class="gb-actions">'
+          + '<button class="cbtn small" id="decDlBtn">保存决定文件</button>'
+          + '<a class="cbtn small ghost" href="' + UPLOAD_URL + 'data/decisions" target="_blank" rel="noopener">打开上传页</a>'
+          + '</div></div>',
           [{label: '知道了', onClick: function(){}}]
         );
+        $c('decGenContent').value = contentStr;
+        $c('decDlBtn').onclick = function(){ download(fname, contentStr); };
       }}
     ]);
+    setTimeout(function(){
+      var opts = document.querySelector('.cmodal .role-opts');
+      if(opts){
+        opts.querySelectorAll('label').forEach(function(lb){
+          lb.addEventListener('click', function(){
+            opts.querySelectorAll('label').forEach(function(x){ x.classList.remove('on'); });
+            lb.classList.add('on');
+          });
+        });
+      }
+    }, 0);
   }
 
   // ---- 管理员任命 ----
@@ -681,14 +838,21 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
       time: nowIso()
     };
     var fname = dec.id + '.decision.json';
-    download(fname, JSON.stringify(dec, null, 2));
-    setStatus($c('promoteStatus'), (action === 'promote' ? '任命' : '撤销') + '决定已生成并下载：' + fname, 'ok');
+    var contentStr = JSON.stringify(dec, null, 2);
+    setStatus($c('promoteStatus'), (action === 'promote' ? '任命' : '撤销') + '决定已生成：' + fname, 'ok');
     showModal(
       (action === 'promote' ? '已提交任命' : '已提交撤销') + '：' + esc(nick),
       '<p>请将 <b style="color:var(--gold2)">' + fname + '</b> 上传到仓库 <code>data/decisions/</code> 后自动生效，会员将收到通知。</p>'
-      + '<p style="margin-top:8px"><a class="cbtn small" href="' + UPLOAD_URL + 'data/decisions" target="_blank" rel="noopener">打开上传页</a></p>',
+      + '<div class="gen-box"><div class="gb-t"><span>' + (action === 'promote' ? '任命' : '撤销') + '决定（' + fname + '）</span></div>'
+      + '<textarea readonly id="promoteGenContent"></textarea>'
+      + '<div class="gb-actions">'
+      + '<button class="cbtn small" id="promoteDlBtn">保存决定文件</button>'
+      + '<a class="cbtn small ghost" href="' + UPLOAD_URL + 'data/decisions" target="_blank" rel="noopener">打开上传页</a>'
+      + '</div></div>',
       [{label: '知道了', onClick: function(){}}]
     );
+    $c('promoteGenContent').value = contentStr;
+    $c('promoteDlBtn').onclick = function(){ download(fname, contentStr); };
     $c('promoteNick').value = '';
   }
 
@@ -734,6 +898,25 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
   $c('btnUpload').addEventListener('click', doUpload);
   $c('btnPromote').addEventListener('click', function(){ doPromote('promote'); });
   $c('btnDemote').addEventListener('click', function(){ doPromote('demote'); });
+
+  // 卖点板块下拉框初始化与切换
+  (function initSellpointSelect(){
+    var sel = $c('upSellpoint');
+    SELLPOINTS.forEach(function(sp){
+      var o = document.createElement('option');
+      o.value = sp.idx;
+      o.textContent = '#' + pad2(sp.idx) + ' ' + sp.title + '（' + sp.row + '）';
+      sel.appendChild(o);
+    });
+    var wrap = $c('upSellpointWrap');
+    function toggleSellpoint(){
+      var v = $c('upPosition').value;
+      wrap.style.display = (v === 'sellpoint_img' || v === 'sellpoint') ? 'block' : 'none';
+      if(v !== 'sellpoint_img' && v !== 'sellpoint'){ sel.value = ''; }
+    }
+    $c('upPosition').addEventListener('change', toggleSellpoint);
+    toggleSellpoint();
+  })();
 
   refreshAuth();
 </script>
