@@ -274,7 +274,7 @@ def rebuild_sections_from_xlsx(src_xlsx, html_file=HTML_FILE):
         imgs = images.get(row, [])
         imgs_html = []
         for j, rel in enumerate(imgs):
-            badge = '<span class="badge key">重点参考图</span>' if j == 0 else '<span class="badge opt">参考图 %d</span>' % (j + 1)
+            badge = '<span class="badge key">重点参考图</span>' if j == 0 else '<span class="badge opt">次要参考图</span>'
             imgs_html.append(
                 '<div class="thumb reveal">%s<img src="%s" loading="lazy" alt="%s"></div>'
                 % (badge, esc(rel), esc(title))
@@ -282,11 +282,13 @@ def rebuild_sections_from_xlsx(src_xlsx, html_file=HTML_FILE):
         search_txt = (title + " " + c + " " + b).replace("\n", " ")
         sp_parts.append(
             '<div class="sp reveal" data-search="%s">\n'
-            '  <div class="sp-head">\n'
-            '    <div class="sp-idx">%02d</div>\n'
-            '    <div><h3>%s</h3>%s</div>\n'
+            '  <div class="sp-left">\n'
+            '    <div class="sp-head">\n'
+            '      <div class="sp-idx">%02d</div>\n'
+            '      <div><h3>%s</h3>%s</div>\n'
+            '    </div>\n'
+            '    <div class="sp-body">%s%s</div>\n'
             '  </div>\n'
-            '  <div class="sp-body">%s%s</div>\n'
             '  <div class="sp-imgs">%s</div>\n'
             '</div>'
             % (esc(search_txt), i, esc(title),
@@ -308,10 +310,8 @@ def rebuild_sections_from_xlsx(src_xlsx, html_file=HTML_FILE):
     src = replace_section(src, "sellpoint", "\n\n".join(sp_parts))
     # 注入横向逐行说明（对任意既有 sub 文案生效）
     sub_pat = re.compile(r'<p class="sub">.*?</p>', re.S)
-    sub_new = ('<p class="sub">本页面向渲染与设计团队，汇集卖点图渲染的验收细则与全部参考图。'
-               '卖点区按新版验收标准表格<b>横向逐行</b>制作：每一行即为一个完整的卖点框架，'
-               '左至右依次为验收要求与对应参考图素材；点击任意图片可放大查看，'
-               '每行第一张为<b style="color:var(--gold2)">重点参考图</b>，其余为可选参考。</p>')
+    sub_new = ('<p class="sub">本页汇集卖点图渲染的验收细则与参考图：左栏为验收要求，右栏为对应参考图，'
+               '点击任意图片可放大，每行第一张为<b style="color:var(--gold2)">重点参考图</b>，其余为次要参考图。</p>')
     src, n = sub_pat.subn(sub_new, src, count=1)
     if n == 0:
         print("[警告] 未找到 <p class=\"sub\">，横向说明未注入")
