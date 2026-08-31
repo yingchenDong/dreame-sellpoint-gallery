@@ -233,11 +233,13 @@ def rebuild_sections_from_xlsx(src_xlsx, html_file=HTML_FILE):
             sp_rows.append(r["row"])
 
     sp_parts = []
+    titles = []
     for i, row in enumerate(sp_rows, 1):
         c = row_text(row, "C")
         b = row_text(row, "B")
         lines = split_lines(c)
         title = lines[0] if lines else f"卖点 {i}"
+        titles.append(title)
         sub = ""
         if "：" in title:
             sub = title.split("：", 1)[1].strip()
@@ -263,7 +265,7 @@ def rebuild_sections_from_xlsx(src_xlsx, html_file=HTML_FILE):
             )
         search_txt = (title + " " + c + " " + b).replace("\n", " ")
         sp_parts.append(
-            '<div class="sp reveal" data-search="%s">\n'
+            '<div class="sp reveal" id="sp-%02d" data-search="%s">\n'
             '  <div class="sp-left">\n'
             '    <div class="sp-head">\n'
             '      <div class="sp-idx">%02d</div>\n'
@@ -273,7 +275,7 @@ def rebuild_sections_from_xlsx(src_xlsx, html_file=HTML_FILE):
             '  </div>\n'
             '  <div class="sp-imgs">%s</div>\n'
             '</div>'
-            % (esc(search_txt), i, esc(title),
+            % (i, esc(search_txt), i, esc(title),
                ('<div class="sp-sub">%s</div>' % esc(sub)) if sub else "",
                ('<ul>%s</ul>' % body_html) if body_html else "", req_html,
                "\n".join(imgs_html))
@@ -298,7 +300,8 @@ def rebuild_sections_from_xlsx(src_xlsx, html_file=HTML_FILE):
         return src[:m.start()] + "\n" + src[m.end():]
 
     src = drop_section(src, "category")
-    src = replace_section(src, "sellpoint", "\n\n".join(sp_parts))
+    toc_html = build_toc_html(titles)
+    src = replace_section(src, "sellpoint", toc_html + "\n\n" + "\n\n".join(sp_parts))
     # 注入横向逐行说明（对任意既有 sub 文案生效）
     sub_pat = re.compile(r'<p class="sub">.*?</p>', re.S)
     sub_new = ('<p class="sub">本页汇集卖点图渲染的验收细则与参考图：左栏为验收要求，右栏为对应参考图，'
@@ -314,6 +317,20 @@ def rebuild_sections_from_xlsx(src_xlsx, html_file=HTML_FILE):
 # ---------------------------------------------------------------- HTML 更新
 def esc(s):
     return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
+
+
+def build_toc_html(titles):
+    """卖点快速导航（吸顶胶囊目录）：每个卖点一个按钮，data-target 对应 sp id"""
+    links = []
+    for idx, t in enumerate(titles, 1):
+        base = re.split(r"\s*核心关键词", t)[0].strip()
+        name = base.split("：", 1)[0].strip() or base
+        if len(name) > 12:
+            name = name[:12] + "…"
+        links.append(f'<a href="#sp-{idx:02d}" data-target="sp-{idx:02d}">{esc(name)}</a>')
+    return ('<div class="toc" id="sellpointToc">\n  <div class="wrap">\n'
+            '    <span class="toc-t">卖点目录</span>\n    '
+            + "\n    ".join(links) + '\n  </div>\n</div>')
 
 
 def build_standard_html(st):
@@ -336,7 +353,7 @@ def build_sp_html(sp):
         f'<div class="sp-idx">{idx}</div><div><h3>{title}</h3>'
         f'<div class="sp-sub">{sub}</div></div>',
         f"<div class=\"sp-body\"><ul>{items}</ul></div>",
-        f'<div class="sp reveal" data-search="{ds}">',
+        f'<div class="sp reveal" id="sp-{idx}" data-search="{ds}">',
     )
 
 
