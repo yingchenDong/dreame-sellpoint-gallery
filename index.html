@@ -74,18 +74,18 @@ section .sec-head p{margin-top:10px;color:var(--muted);font-size:14px;max-width:
 
 /* Sellpoints */
 .sell-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.sp{background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:grid;grid-template-columns:30% 70%;transition:transform .3s,border-color .3s}
+.sp{background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:grid;grid-template-columns:30% 70%;margin-bottom:26px;transition:transform .3s,border-color .3s}
 .sp:hover{transform:translateY(-4px);border-color:rgba(201,164,92,.4)}
-.sp .sp-left{padding:22px 26px 20px;border-right:1px solid rgba(255,255,255,.05);min-width:0}
+.sp .sp-left{padding:30px 28px;border-right:1px solid rgba(255,255,255,.05);min-width:0}
 .sp .sp-head{padding:0 0 12px;display:flex;align-items:flex-start;gap:14px}
 .sp .sp-idx{font-size:12px;color:var(--gold);border:1px solid var(--line);border-radius:8px;padding:3px 9px;white-space:nowrap;font-weight:600}
-.sp h3{font-size:19px;font-weight:700;line-height:1.35}
+.sp h3{font-size:24px;font-weight:800;letter-spacing:1px;margin-bottom:18px}
 .sp .sp-sub{font-size:13px;color:var(--gold2);margin-top:3px}
 .sp .sp-body{padding:4px 0 0}
 .sp ul{list-style:none}
-.sp li{font-size:12.5px;color:#a89f8d;padding:6px 0 6px 18px;position:relative;line-height:1.6}
-.sp li::before{content:"";position:absolute;left:0;top:13px;width:5px;height:5px;background:var(--gold);border-radius:50%;opacity:.7}
-.sp .sp-imgs{columns:4;column-gap:14px;padding:16px 26px 24px}
+.sp li{font-size:12.5px;color:#a89f8d;padding:7px 0 7px 18px;position:relative;line-height:1.65}
+.sp li::before{content:"";position:absolute;left:0;top:14px;width:5px;height:5px;background:var(--gold);border-radius:50%;opacity:.7}
+.sp .sp-imgs{columns:4;column-gap:14px;padding:20px}
 .sp .sp-imgs .thumb{position:relative;break-inside:avoid;margin-bottom:14px;border-radius:10px;overflow:hidden;cursor:zoom-in;background:#000;border:1px solid rgba(255,255,255,.06);transition:border-color .3s}
 .sp .sp-imgs .thumb:hover{border-color:rgba(201,164,92,.45)}
 .sp .sp-imgs .thumb img{width:100%;height:auto;display:block;transition:transform .35s}
