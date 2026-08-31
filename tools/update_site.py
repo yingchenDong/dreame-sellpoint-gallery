@@ -252,11 +252,14 @@ def rebuild_sections_from_xlsx(src_xlsx, html_file=HTML_FILE):
             req_html = '<div class="sp-req"><div class="sp-req-t">验收标准（B列）</div><ul>%s</ul></div>' % req_li
         imgs = images.get(row, [])
         imgs_html = []
+        # cap 显示名：与 index.html 一致，截取"核心关键词"前的主名称
+        cap_name = re.split(r"\s*核心关键词", title)[0].strip()
         for j, rel in enumerate(imgs):
             badge = '<span class="badge key">重点参考图</span>' if j == 0 else '<span class="badge opt">次要参考图</span>'
             imgs_html.append(
-                '<div class="thumb reveal">%s<img src="%s" loading="lazy" alt="%s"></div>'
-                % (badge, esc(rel), esc(title))
+                '<div class="thumb reveal">%s<img src="%s" loading="lazy" alt="%s">'
+                '<span class="cap"><b>图 %d</b>%s</span></div>'
+                % (badge, esc(rel), esc(title), j + 1, esc(cap_name))
             )
         search_txt = (title + " " + c + " " + b).replace("\n", " ")
         sp_parts.append(

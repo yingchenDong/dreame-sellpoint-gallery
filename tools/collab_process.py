@@ -287,22 +287,50 @@ def _shift_html_row_images(row, delta):
         INDEX_HTML.write_text(new_html, encoding="utf-8")
 
 
-def _thumb_html(row, fname, title, primary=False):
+def _thumb_html(row, fname, title, primary=False, num=None):
     badge = '<span class="badge key">重点参考图</span>' if primary else '<span class="badge opt">次要参考图</span>'
     alt = (title or "").replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;")
-    return f'<div class="thumb reveal">{badge}<img src="ref_assets/sellpoints/{row}/{fname}" loading="lazy" alt="{alt}"></div>'
+    cap_name = re.split(r"\s*核心关键词", title or "")[0].strip()
+    cap = f'<span class="cap"><b>图 {num}</b>{cap_name}</span>' if num else ""
+    return (f'<div class="thumb reveal">{badge}'
+            f'<img src="ref_assets/sellpoints/{row}/{fname}" loading="lazy" alt="{alt}">'
+            f'{cap}</div>')
+
+
+def _shift_html_cap_nums(row, delta):
+    """该卖点图片区所有 cap 序号整体平移 delta（primary 插入后旧图序号顺延）"""
+    html = INDEX_HTML.read_text(encoding="utf-8")
+    key = f"ref_assets/sellpoints/{row}/"
+    idx = html.find(key)
+    if idx < 0:
+        return
+    sp_start = html.rfind('<div class="sp', 0, idx)
+    sp_end = html.find('</section>', sp_start) if sp_start >= 0 else -1
+    if sp_start < 0 or sp_end < 0:
+        return
+    seg = html[sp_start:sp_end]
+    pat = re.compile(r'(<b>图 )(\d+)(</b>)')
+    def bump(m):
+        return f"{m.group(1)}{int(m.group(2)) + delta}{m.group(3)}"
+    seg2, n = pat.subn(bump, seg)
+    if n:
+        INDEX_HTML.write_text(html[:sp_start] + seg2 + html[sp_end:], encoding="utf-8")
 
 
 def _html_prepend_thumb(row, fname, title):
-    """primary：新图插入图片区第 1 位（重点参考图），原第 1 张徽标降为次要"""
+    """primary：新图插入图片区第 1 位（重点参考图），原第 1 张徽标降为次要，cap 序号顺延"""
     reg = _sp_imgs_region(row)
     if reg is None:
         print(f"[sellpoint] 未在 index.html 中找到 {row} 的图片区，跳过 HTML 更新")
         return
     html, imgs_open_end, _imgs_close, _sp_start = reg
+    _shift_html_cap_nums(row, +1)
+    html = INDEX_HTML.read_text(encoding="utf-8")
+    imgs_open = html.find('<div class="sp-imgs">', _sp_start)
+    imgs_open_end = imgs_open + len('<div class="sp-imgs">')
     head = html[:imgs_open_end]
     tail = html[imgs_open_end:]
-    new_thumb = _thumb_html(row, fname, title, primary=True)
+    new_thumb = _thumb_html(row, fname, title, primary=True, num=1)
     # 原第 1 张徽标 key -> opt
     tail = tail.replace('<span class="badge key">重点参考图</span>', '<span class="badge opt">次要参考图</span>', 1)
     html = head + new_thumb + "\n" + tail
@@ -310,7 +338,7 @@ def _html_prepend_thumb(row, fname, title):
 
 
 def _html_append_thumb(row, fname, title):
-    """secondary：新图追加到图片区末尾（次要参考图）"""
+    """secondary：新图追加到图片区末尾（次要参考图），cap 序号=现有图数+1"""
     reg = _sp_imgs_region(row)
     if reg is None:
         print(f"[sellpoint] 未在 index.html 中找到 {row} 的图片区，跳过 HTML 更新")
@@ -318,7 +346,9 @@ def _html_append_thumb(row, fname, title):
     html, _imgs_open_end, imgs_close, _sp_start = reg
     head = html[:imgs_close]
     tail = html[imgs_close:]
-    new_thumb = _thumb_html(row, fname, title, primary=False)
+    region = html[_sp_start:imgs_close]
+    num = region.count('<div class="thumb reveal">') + 1
+    new_thumb = _thumb_html(row, fname, title, primary=False, num=num)
     html = head + new_thumb + "\n" + tail
     INDEX_HTML.write_text(html, encoding="utf-8")
 
