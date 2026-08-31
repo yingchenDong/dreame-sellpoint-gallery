@@ -25,6 +25,13 @@ header.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1
 
 /* Blocks */
 main{padding:70px 0 90px}
+.dim-nav{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:44px}
+.dim-nav a{font-size:13px;letter-spacing:1px;color:var(--muted);border:1px solid var(--line);border-radius:100px;padding:8px 20px;transition:border-color .25s,color .25s,background .25s}
+.dim-nav a:hover,.dim-nav a:focus{color:var(--gold2);border-color:rgba(201,164,92,.55);background:rgba(201,164,92,.06)}
+.dim-head{margin:52px 0 22px;padding:16px 0 16px 22px;border-left:4px solid var(--gold);background:linear-gradient(90deg,rgba(201,164,92,.10),transparent 70%);border-radius:0 14px 14px 0}
+.dim-head .dim-en{font-size:11px;letter-spacing:4px;color:var(--gold);text-transform:uppercase}
+.dim-head h2{font-size:26px;font-weight:800;letter-spacing:2px;color:#f3ead6;margin-top:4px}
+.dim-head p{font-size:13px;color:var(--muted);margin-top:6px}
 .cat-block{display:grid;grid-template-columns:30% 70%;gap:0;background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:26px;transition:border-color .3s}
 .cat-block:hover{border-color:rgba(201,164,92,.35)}
 .cat-left{padding:30px 28px;border-right:1px solid rgba(255,255,255,.05);min-width:0}
@@ -73,6 +80,16 @@ footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.05);text-align:cent
 </header>
 
 <main class="wrap">
+  <nav class="dim-nav reveal" aria-label="维度导航">
+    <a href="#dim-detail">环境清晰度与细节</a>
+    <a href="#dim-texture">产品质感</a>
+    <a href="#dim-light">光影</a>
+  </nav>
+  <div class="dim-head reveal" id="dim-detail">
+    <div class="dim-en">Dimension 01</div>
+    <h2>环境清晰度与细节</h2>
+    <p>毛发碎屑、液体脏污、宠物、地毯：强调细节高清、纹理分明，画面经得起放大查看。</p>
+  </div>
   <div class="cat-block reveal" id="row_02" data-search="毛发碎屑 环境清晰度与细节">
     <div class="cat-left">
 <div class="cat-dim">环境清晰度与细节</div>      <h3>毛发碎屑</h3>
@@ -135,6 +152,11 @@ footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.05);text-align:cent
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_05/7.jpeg" loading="lazy" alt="地毯"></div>
       </div>
     </div>
+  </div>
+  <div class="dim-head reveal" id="dim-texture">
+    <div class="dim-en">Dimension 02</div>
+    <h2>产品质感</h2>
+    <p>主机、基站、双圆盘、滚筒履带、滚刷、边刷、全能基站透显：强调金属与塑料质感、CMF 细节与真实阴影。</p>
   </div>
   <div class="cat-block reveal" id="row_06" data-search="主机 产品质感">
     <div class="cat-left">
@@ -253,6 +275,11 @@ footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.05);text-align:cent
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_12/5.jpeg" loading="lazy" alt="全能基站透显"></div>
       </div>
     </div>
+  </div>
+  <div class="dim-head reveal" id="dim-light">
+    <div class="dim-en">Dimension 03</div>
+    <h2>光影</h2>
+    <p>机器光影、环境光影、投影、激光、场景参考：强调光感细腻、过渡自然，接近真实光照。</p>
   </div>
   <div class="cat-block reveal" id="row_13" data-search="机器光影 光影">
     <div class="cat-left">

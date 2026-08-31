@@ -220,17 +220,6 @@ def rebuild_sections_from_xlsx(src_xlsx, html_file=HTML_FILE):
     def row_text(row, col):
         return (rows_text.get(row) or {}).get(col, "")
 
-    # category：卖点表头前的行
-    cat_rows = []
-    for r in sheet:
-        a = r["cells"].get("A", "")
-        if "卖点图展现形式" in a or "主图展现形式" in a:
-            break
-        if r["row"] <= 1:
-            continue
-        c = r["cells"].get("C", "")
-        if c:
-            cat_rows.append(r["row"])
     sp_rows = []
     in_sell = False
     for r in sheet:
@@ -243,16 +232,6 @@ def rebuild_sections_from_xlsx(src_xlsx, html_file=HTML_FILE):
         if c:
             sp_rows.append(r["row"])
 
-    cat_parts = []
-    for row in cat_rows:
-        c = row_text(row, "C")
-        lines = split_lines(c)
-        title = lines[0] if lines else ""
-        sub = " ".join(lines[1:]) if len(lines) > 1 else ""
-        cat_parts.append(
-            '<div class="cat reveal" data-search="%s"><b>%s</b><span>%s</span></div>'
-            % (esc(title + " " + sub), esc(title), esc(sub))
-        )
     sp_parts = []
     for i, row in enumerate(sp_rows, 1):
         c = row_text(row, "C")
@@ -306,7 +285,16 @@ def rebuild_sections_from_xlsx(src_xlsx, html_file=HTML_FILE):
             raise RuntimeError("section %s not found" % sec_id)
         return src[:m.start()] + m.group(1) + "\n" + new_inner + "\n" + m.group(2) + src[m.end():]
 
-    src = replace_section(src, "category", "\n".join(cat_parts))
+    def drop_section(src, sec_id):
+        """删除整块 section（细分类别已迁移至独立 categories.html，不再重建）"""
+        pat = re.compile(r'\n?<section id="%s"[^>]*>.*?</section>\n?' % sec_id, re.S)
+        m = pat.search(src)
+        if not m:
+            print("[提示] section %s 不存在，跳过删除" % sec_id)
+            return src
+        return src[:m.start()] + "\n" + src[m.end():]
+
+    src = drop_section(src, "category")
     src = replace_section(src, "sellpoint", "\n\n".join(sp_parts))
     # 注入横向逐行说明（对任意既有 sub 文案生效）
     sub_pat = re.compile(r'<p class="sub">.*?</p>', re.S)
@@ -316,7 +304,7 @@ def rebuild_sections_from_xlsx(src_xlsx, html_file=HTML_FILE):
     if n == 0:
         print("[警告] 未找到 <p class=\"sub\">，横向说明未注入")
     Path(html_file).write_text(src, encoding="utf-8")
-    print(f"[完成] 新版 Excel 重建：细分类别 {len(cat_parts)} 个，卖点框架 {len(sp_parts)} 个，内嵌图 {sum(len(v) for v in images.values())} 张")
+    print(f"[完成] 新版 Excel 重建：卖点框架 {len(sp_parts)} 个，内嵌图 {sum(len(v) for v in images.values())} 张（细分类别已迁移至 categories.html，不再重建）")
     return len(sp_parts)
 
 
@@ -365,15 +353,18 @@ def update_html(src_xlsx, dry_run=False):
             new_body = re.sub(r'<div class="kw">.*?</div><ul>.*?</ul>', body, old, flags=re.S)
             html = html.replace(old, new_body, 1)
 
-    # 2) 细分类别
-    cats_html = "".join(
-        f'<div class="cat reveal" data-search="{esc(c["name"] + " " + c["desc"])}"><b>{esc(c["name"])}</b>'
-        f'<span>{esc(c["desc"])}</span></div>\n'
-        for c in data["categories"]
-    )
-    html = re.sub(r'<div class="cats">.*?</div>\s*</div>\s*</section>',
-                  f'<div class="cats">\n{cats_html}\n    </div>\n  </div>\n</section>',
-                  html, flags=re.S, count=1)
+    # 2) 细分类别（已迁移至 categories.html，首页不再有 .cats 容器，仅提示不报错）
+    if '<div class="cats">' in html:
+        cats_html = "".join(
+            f'<div class="cat reveal" data-search="{esc(c["name"] + " " + c["desc"])}"><b>{esc(c["name"])}</b>'
+            f'<span>{esc(c["desc"])}</span></div>\n'
+            for c in data["categories"]
+        )
+        html = re.sub(r'<div class="cats">.*?</div>\s*</div>\s*</section>',
+                      f'<div class="cats">\n{cats_html}\n    </div>\n  </div>\n</section>',
+                      html, flags=re.S, count=1)
+    else:
+        print("[提示] 首页已无细分类别容器，跳过分类更新（分类见 categories.html）")
 
     # 3) 卖点卡（按序号替换文案，保留图）
     sps = re.findall(r'<div class="sp reveal"[^>]*>(.*?)(?=<div class="sp reveal"|</div>\s*</div>\s*</section>)', html, re.S)

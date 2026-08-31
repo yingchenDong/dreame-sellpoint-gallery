@@ -85,9 +85,8 @@ section .sec-head p{margin-top:10px;color:var(--muted);font-size:14px;max-width:
 .sp ul{list-style:none}
 .sp li{font-size:12.5px;color:#a89f8d;padding:6px 0 6px 18px;position:relative;line-height:1.6}
 .sp li::before{content:"";position:absolute;left:0;top:13px;width:5px;height:5px;background:var(--gold);border-radius:50%;opacity:.7}
-.sp .sp-imgs{display:flex;flex-wrap:wrap;gap:12px;padding:16px 26px 24px;align-content:flex-start}
-.sp .sp-imgs .thumb{position:relative;border-radius:10px;overflow:hidden;cursor:zoom-in;background:#000;border:1px solid rgba(255,255,255,.06);flex:0 0 auto;width:200px}
-.sp .sp-imgs .thumb:first-child{width:320px}
+.sp .sp-imgs{columns:3;column-gap:14px;padding:16px 26px 24px}
+.sp .sp-imgs .thumb{position:relative;border-radius:10px;overflow:hidden;cursor:zoom-in;background:#000;border:1px solid rgba(255,255,255,.06);break-inside:avoid;margin:0 0 14px}
 .sp .sp-imgs .thumb img{width:100%;height:auto;display:block;transition:transform .35s}
 .sp .sp-imgs .thumb:hover img{transform:scale(1.06)}
 .sp .sp-imgs .thumb .badge{position:absolute;top:8px;left:8px;font-size:10px;letter-spacing:1px;padding:3px 8px;border-radius:100px;z-index:2}
@@ -141,6 +140,18 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
 .upload-entry .up-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
 .upload-entry .up-tip{font-size:12.5px;color:var(--muted);margin-top:16px;line-height:1.8}
 
+.entry-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.entry-card{position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:14px;padding:26px 28px;background:linear-gradient(135deg,rgba(201,164,92,.10),rgba(201,164,92,.02) 55%),var(--panel);border:1px solid rgba(201,164,92,.38);border-radius:18px;overflow:hidden;text-decoration:none;transition:transform .3s,border-color .3s,box-shadow .3s;cursor:pointer}
+.entry-card::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 160px at 12% 0%,rgba(201,164,92,.16),transparent 60%);pointer-events:none}
+.entry-card:hover{transform:translateY(-3px);border-color:rgba(201,164,92,.75);box-shadow:0 14px 40px rgba(0,0,0,.45)}
+.entry-card .entry-no{font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase}
+.entry-card h3{font-size:22px;font-weight:800;color:#f3ead6;letter-spacing:1px;margin:2px 0 6px;line-height:1.35}
+.entry-card p{font-size:13px;color:var(--muted);line-height:1.7;margin:0}
+.entry-card .entry-go{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--gold2)}
+.entry-card .entry-go svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s}
+.entry-card:hover .entry-go svg{transform:translateX(4px)}
+@media (max-width:900px){.entry-grid{grid-template-columns:1fr}}
+
 
 @media (max-width:1200px){
   .gallery-grid{columns:4}
@@ -150,12 +161,14 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
   .sell-grid{grid-template-columns:1fr}
   .sp{grid-template-columns:1fr}
   .sp .sp-left{border-right:none;border-bottom:1px solid rgba(255,255,255,.05)}
+  .sp .sp-imgs{columns:2}
   .gallery-grid{columns:3}
   .hero h1{font-size:32px}
   nav .links{display:none}
 }
 @media (max-width:560px){
   .gallery-grid{columns:2}
+  .sp .sp-imgs{columns:2}
 }
 
 </style>
@@ -167,7 +180,6 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
     <div class="brand"><img src="ref_assets/logo_dreame_gold.png" alt="DREAME"><span>DREAME</span></div>
     <div class="links">
       <a href="#standard">核心标准</a>
-      <a href="#category">细分类别</a>
       <a href="#sellpoint">卖点参考</a>
       <a href="#gallery">标杆图库</a>
       <a href="collab.html" target="_blank" style="color:var(--gold2)">协作中心</a>
@@ -190,10 +202,39 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
         <button class="sclear" id="searchClear" title="清空">×</button>
       </div>
       <div class="scount" id="searchCount"></div>
-      <div class="search-hint">输入关键词即可筛选下方卖点、分类与图库板块，无需回车</div>
+      <div class="search-hint">输入关键词即可筛选下方卖点与图库板块，无需回车</div>
     </div>
   </div>
 </header>
+
+<section id="entry" style="background:var(--panel)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="en">Category</div>
+      <h2>分类入口</h2>
+      <p>按你的需求直达对应参考内容：卖点图验收要求，或按「环境清晰度与细节 · 产品质感 · 光影」三大维度细分类别。</p>
+    </div>
+    <div class="entry-grid">
+      <a class="entry-card reveal" href="#sellpoint">
+        <div>
+          <div class="entry-no">Entry 01</div>
+          <h3>卖点图展现形式</h3>
+          <p>25 个卖点的验收要求与参考图：左栏为验收细则，右栏为对应参考图，支持搜索、点击放大。</p>
+        </div>
+        <span class="entry-go">进入卖点参考 <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="entry-card reveal" href="https://yingchendong.github.io/dreame-sellpoint-gallery/categories.html" target="_blank" rel="noopener">
+        <div>
+          <div class="entry-no">Entry 02</div>
+          <h3>环境清晰度与细节 · 产品质感 · 光影</h3>
+          <p>细分类别的验收细则与参考图：毛发碎屑、液体脏污、宠物、地毯、主机、基站、滚刷等 16 个类别，按三大维度分组展示。</p>
+        </div>
+        <span class="entry-go">打开细分类别 <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
+
 
 <section id="standard">
   <div class="wrap">
@@ -233,24 +274,6 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
   </div>
 </section>
 
-<section id="category" style="background:var(--panel)">
-<div class="cat reveal" data-search="毛发碎屑 1.应用场景：地毯、地面、与滚刷结合表达卖点 2.毛发清晰，质感真实，与滚刷刷毛质感区分开 3.避免纯灰尘等单一形式碎屑，组合出现视觉更丰富"><b>毛发碎屑</b><span>1.应用场景：地毯、地面、与滚刷结合表达卖点 2.毛发清晰，质感真实，与滚刷刷毛质感区分开 3.避免纯灰尘等单一形式碎屑，组合出现视觉更丰富</span></div>
-<div class="cat reveal" data-search="液体脏污 1.应用场景：拖地（脏咖啡、脏水、脏酱油/常用污渍） 2.液体质感明确，边缘形态有机，通过反光、高光等明暗关系刻画 3.液体面积、造型等需把控，避免过分脏污"><b>液体脏污</b><span>1.应用场景：拖地（脏咖啡、脏水、脏酱油/常用污渍） 2.液体质感明确，边缘形态有机，通过反光、高光等明暗关系刻画 3.液体面积、造型等需把控，避免过分脏污</span></div>
-<div class="cat reveal" data-search="宠物 1.应用场景：互动场景，宠物出现可以让毛发、避障相关卖点更自然 2.宠物选择应当符合大部分人审美，寻找最大公约数，可爱/悠闲/活泼/毛发润泽等 避免小众品种或无毛发宠物 3.通过视角、动态等暗示卖点，是画面的第一/二视觉中心"><b>宠物</b><span>1.应用场景：互动场景，宠物出现可以让毛发、避障相关卖点更自然 2.宠物选择应当符合大部分人审美，寻找最大公约数，可爱/悠闲/活泼/毛发润泽等 避免小众品种或无毛发宠物 3.通过视角、动态等暗示卖点，是画面的第一/二视觉中心</span></div>
-<div class="cat reveal" data-search="地毯 1.应用场景：三抬升、大吸力、滚刷等 2.类型分长、中、短毛地毯，中长毛更常见更能体现抬升、吸力等卖点需求 3.地毯毛发需清晰可见，根根分明，质感柔顺"><b>地毯</b><span>1.应用场景：三抬升、大吸力、滚刷等 2.类型分长、中、短毛地毯，中长毛更常见更能体现抬升、吸力等卖点需求 3.地毯毛发需清晰可见，根根分明，质感柔顺</span></div>
-<div class="cat reveal" data-search="主机 1.视觉中心 2.沉稳色调，明暗交界线过渡层次丰富，避免纯白和死黑 3.避免明显的廉价塑料质感，通过丝印、双圆盘/滚筒、金属等提高画面精致度 4.场景环境需兼容黑白两色机型，避免某配色在场景中生硬"><b>主机</b><span>1.视觉中心 2.沉稳色调，明暗交界线过渡层次丰富，避免纯白和死黑 3.避免明显的廉价塑料质感，通过丝印、双圆盘/滚筒、金属等提高画面精致度 4.场景环境需兼容黑白两色机型，避免某配色在场景中生硬</span></div>
-<div class="cat reveal" data-search="基站 1.视觉中心 2.沉稳色调，明暗交界线过渡层次丰富，避免纯白和死黑 3.cmf质感强烈，作为kv出现需通过打光营造氛围和高级感"><b>基站</b><span>1.视觉中心 2.沉稳色调，明暗交界线过渡层次丰富，避免纯白和死黑 3.cmf质感强烈，作为kv出现需通过打光营造氛围和高级感</span></div>
-<div class="cat reveal" data-search="双圆盘 1.毛发纤维清晰可见，避免低分辨率糊在一起 2.毛发发量蓬松有厚度，用料扎实"><b>双圆盘</b><span>1.毛发纤维清晰可见，避免低分辨率糊在一起 2.毛发发量蓬松有厚度，用料扎实</span></div>
-<div class="cat reveal" data-search="滚筒履带 1.毛发纤维清晰可见，避免低分辨率糊在一起 2.毛发发量蓬松有厚度，用料扎实 3.需经常通过透显效果表现，避免因角度问题含糊不清"><b>滚筒履带</b><span>1.毛发纤维清晰可见，避免低分辨率糊在一起 2.毛发发量蓬松有厚度，用料扎实 3.需经常通过透显效果表现，避免因角度问题含糊不清</span></div>
-<div class="cat reveal" data-search="滚刷 1.应用场景：毛发、防缠绕等 2.滚刷质感避免廉价塑料 3.选取角度、透显特效应最大化呈现滚刷造型卖点"><b>滚刷</b><span>1.应用场景：毛发、防缠绕等 2.滚刷质感避免廉价塑料 3.选取角度、透显特效应最大化呈现滚刷造型卖点</span></div>
-<div class="cat reveal" data-search="边刷 1.应用场景：边角清洁 2.边刷毛发需根根分明，根部聚拢、尾部自然轻微散开 3.高速运转画面边刷刷毛轻微模糊但需保证上述效果"><b>边刷</b><span>1.应用场景：边角清洁 2.边刷毛发需根根分明，根部聚拢、尾部自然轻微散开 3.高速运转画面边刷刷毛轻微模糊但需保证上述效果</span></div>
-<div class="cat reveal" data-search="全能基站透显 1.应用场景：全能基站 2.透显效果自然，清洁仓等不同区域需合理选择特效颜色 3.包含水、蒸汽等特效部分需避免质感生硬"><b>全能基站透显</b><span>1.应用场景：全能基站 2.透显效果自然，清洁仓等不同区域需合理选择特效颜色 3.包含水、蒸汽等特效部分需避免质感生硬</span></div>
-<div class="cat reveal" data-search="机器光影 1.小范围聚焦机器，光影结构简单 2.光影过渡自然，与质感表达相得益彰，避免过度曝光和死黑 3.明确的聚光可以凸显视觉中心和卖点，但需把握阴影投影等自然度 4.整体色调自然，以明媚为主或凸显品牌调性"><b>机器光影</b><span>1.小范围聚焦机器，光影结构简单 2.光影过渡自然，与质感表达相得益彰，避免过度曝光和死黑 3.明确的聚光可以凸显视觉中心和卖点，但需把握阴影投影等自然度 4.整体色调自然，以明媚为主或凸显品牌调性</span></div>
-<div class="cat reveal" data-search="环境光影 1.大尺度场景，光影层次自由度高 2.光影过渡自然，与质感表达相得益彰，避免过度曝光和死黑 3.明确的聚光可以凸显视觉中心和卖点，但需把握阴影投影等自然度 4.整体色调自然，以明媚为主或凸显品牌调性，预览清晰效果好"><b>环境光影</b><span>1.大尺度场景，光影层次自由度高 2.光影过渡自然，与质感表达相得益彰，避免过度曝光和死黑 3.明确的聚光可以凸显视觉中心和卖点，但需把握阴影投影等自然度 4.整体色调自然，以明媚为主或凸显品牌调性，预览清晰效果好</span></div>
-<div class="cat reveal" data-search="投影 1.投影过渡自然，由实到虚有明显的过渡，自然渐淡 2.不同物体的投影表达不一样，有漫反射和镜面反射区别 3.宁柔和勿生硬，投影黑度需参照画面亮度"><b>投影</b><span>1.投影过渡自然，由实到虚有明显的过渡，自然渐淡 2.不同物体的投影表达不一样，有漫反射和镜面反射区别 3.宁柔和勿生硬，投影黑度需参照画面亮度</span></div>
-<div class="cat reveal" data-search="激光 1.激光照射效果需通透，避免无变化的蓝色，渐变标准可参考投影 2.暗光环境下氛围和穿搭效果更佳 3.特效需精致，避免滥用"><b>激光</b><span>1.激光照射效果需通透，避免无变化的蓝色，渐变标准可参考投影 2.暗光环境下氛围和穿搭效果更佳 3.特效需精致，避免滥用</span></div>
-<div class="cat reveal" data-search="场景参考 1.通常情况下场景需考虑不同地区文化的最大公约数 2.结合具体卖点、旗舰/中配等因素选择"><b>场景参考</b><span>1.通常情况下场景需考虑不同地区文化的最大公约数 2.结合具体卖点、旗舰/中配等因素选择</span></div>
-</section>
 
 <section id="sellpoint">
 <div class="sp reveal" data-search="蒸汽拖地：气体效果真实、产品结构清晰 蒸汽拖地：气体效果真实、产品结构清晰&amp;#xA;&amp;#xA;1、蒸汽：气体有虚实处理，不要太浓烈，参考图5、图6的气体效果&amp;#xA;2、光影：暗背景聚焦打亮产品，借助明暗对比凸显机身与水汽的层次质感 &amp;#xA;3、动态：制作蒸汽喷出、刷毛转动这类动态特效，直观呈现清洁作业状态 &amp;#xA;4、构图：主推采用低斜侧机位拍摄，以居家实景为主、纯色特效为辅来突出产品 &amp;#xA;5、材质：写实还原哑光机身、蓬松刷毛、通透水雾等不同物料的质感差异&amp;#xA; 高配（旗舰技术）&amp;#xA;1、场        景：居家场景，符合实际生活场景让消费者直观感受到可以解决实际生活场景的问题。&amp;#xA;2、色        调：黑金场景，金色色调全系列保持一致，主kv每个系列有明显区别，色彩：整体使用低饱和配色，搭配小面积亮色点缀，保障产品为视觉重心&amp;#xA;3、主次明确：可通过主次虚实、明暗对比对产品进行强化。&amp;#xA;4、渲染质感：有细节，肌理，光影&amp;#xA;6、特       效：首选金色，其次蓝色&amp;#xA;7、构       图：核查画面美观性、平衡性，是否助力卖点呈现&amp;#xA;&amp;#xA;ps:视角参考可首选第一张，其他需要根据不同的视觉视觉师可通过实际卖点需求进行选择&amp;#xA;（如没有匹配的选项设计师可自行寻找后将合适的参考添加于对应表格内）">
@@ -1278,7 +1301,7 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
   var sClear = document.getElementById('searchClear');
   var sCount = document.getElementById('searchCount');
   var searchTargets = Array.prototype.slice.call(document.querySelectorAll('[data-search]'));
-  var secList = ['#standard','#category','#sellpoint','#gallery'].map(function(s){ return document.querySelector(s); });
+  var secList = ['#standard','#sellpoint','#gallery'].map(function(s){ return document.querySelector(s); });
   function norm(s){ return (s || '').toLowerCase().replace(/\s+/g,''); }
   function secVisible(sec){
     var els = sec.querySelectorAll('[data-search]');
