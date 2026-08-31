@@ -403,7 +403,12 @@ def update_html(src_xlsx, dry_run=False):
 
 # ---------------------------------------------------------------- 图片更新
 def add_gallery_from_zip(zip_path):
-    """解压图片并追加为新图库分组（按 顶层子目录 / 文件名公共前缀 分组）"""
+    """解压图片并追加为新图库分组（按 顶层子目录 / 文件名公共前缀 分组）
+    注意：首页“标杆参考图库”区块已于改版中移除，本函数不再插入 gallery section。"""
+    html_cur = Path(HTML_FILE).read_text(encoding="utf-8")
+    if 'id="gallery"' not in html_cur:
+        print("[跳过] 首页已移除“标杆参考图库”区块，zip 图片不再插入 index.html")
+        return 0
     with zipfile.ZipFile(zip_path) as zf:
         names = [n for n in zf.namelist()
                  if n.lower().endswith((".jpg", ".jpeg", ".png", ".webp")) and not n.startswith("__MACOSX")]
@@ -450,6 +455,12 @@ def html_section_gallery_end():
 
 
 def add_gallery_from_pdf(pdf_path):
+    """PDF 提取内嵌图并追加为更新页图库分组。
+    注意：首页“标杆参考图库”区块已于改版中移除，本函数不再插入 gallery section。"""
+    html_cur = Path(HTML_FILE).read_text(encoding="utf-8")
+    if 'id="gallery"' not in html_cur:
+        print("[跳过] 首页已移除“标杆参考图库”区块，PDF 内嵌图不再插入 index.html")
+        return 0
     try:
         import fitz  # PyMuPDF
     except ImportError:
