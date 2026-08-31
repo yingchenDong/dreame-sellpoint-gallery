@@ -306,10 +306,15 @@ def rebuild_sections_from_xlsx(src_xlsx, html_file=HTML_FILE):
 
     src = replace_section(src, "category", "\n".join(cat_parts))
     src = replace_section(src, "sellpoint", "\n\n".join(sp_parts))
-    src = src.replace(
-        "从卖点表格第 20 行起、纵向至 F 列的全部卖点，完整保留文案与参考图。每行左侧第一张为",
-        "按新版验收标准表格横向逐行制作：每一行即为一个完整的卖点框架，左至右依次为验收要求与对应参考图素材。每行第一张为"
-    )
+    # 注入横向逐行说明（对任意既有 sub 文案生效）
+    sub_pat = re.compile(r'<p class="sub">.*?</p>', re.S)
+    sub_new = ('<p class="sub">本页面向渲染与设计团队，汇集卖点图渲染的验收细则与全部参考图。'
+               '卖点区按新版验收标准表格<b>横向逐行</b>制作：每一行即为一个完整的卖点框架，'
+               '左至右依次为验收要求与对应参考图素材；点击任意图片可放大查看，'
+               '每行第一张为<b style="color:var(--gold2)">重点参考图</b>，其余为可选参考。</p>')
+    src, n = sub_pat.subn(sub_new, src, count=1)
+    if n == 0:
+        print("[警告] 未找到 <p class=\"sub\">，横向说明未注入")
     Path(html_file).write_text(src, encoding="utf-8")
     print(f"[完成] 新版 Excel 重建：细分类别 {len(cat_parts)} 个，卖点框架 {len(sp_parts)} 个，内嵌图 {sum(len(v) for v in images.values())} 张")
     return len(sp_parts)
