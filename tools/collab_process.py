@@ -290,11 +290,9 @@ def _shift_html_row_images(row, delta):
 def _thumb_html(row, fname, title, primary=False, num=None):
     badge = '<span class="badge key">重点参考图</span>' if primary else '<span class="badge opt">次要参考图</span>'
     alt = (title or "").replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;")
-    cap_name = re.split(r"\s*核心关键词", title or "")[0].strip()
-    cap = f'<span class="cap"><b>图 {num}</b>{cap_name}</span>' if num else ""
     return (f'<div class="thumb reveal">{badge}'
             f'<img src="ref_assets/sellpoints/{row}/{fname}" loading="lazy" alt="{alt}">'
-            f'{cap}</div>')
+            f'</div>')
 
 
 def _shift_html_cap_nums(row, delta):
