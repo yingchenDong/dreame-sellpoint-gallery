@@ -41,9 +41,12 @@ main{padding:70px 0 90px}
 .cat-left li{font-size:12.5px;color:#a89f8d;padding:7px 0 7px 18px;position:relative;line-height:1.65}
 .cat-left li::before{content:"";position:absolute;left:0;top:14px;width:5px;height:5px;background:var(--gold);border-radius:50%;opacity:.7}
 .cat-right{padding:20px;min-width:0}
-.masonry{columns:4;column-gap:2px}
-.m-item{break-inside:avoid;margin-bottom:2px;cursor:zoom-in;transition:border-color .3s}
+.masonry{columns:4;column-gap:4px}
+.m-item{position:relative;break-inside:avoid;margin-bottom:4px;cursor:zoom-in;transition:border-color .3s}
 .m-item:hover{border-color:rgba(201,164,92,.45)}
+.m-item.key{border:1px solid rgba(201,164,92,.55)}
+.m-item .badge{position:absolute;top:6px;left:6px;font-size:10px;letter-spacing:1px;padding:3px 8px;border-radius:100px;z-index:2}
+.m-item .badge.key{background:linear-gradient(120deg,#8a6a2f,#c9a45c);color:#14100a;font-weight:700}
 .m-item img{width:100%;height:auto;display:block;transition:transform .35s}
 .m-item:hover img{transform:scale(1.03)}
 
@@ -97,7 +100,7 @@ footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.05);text-align:cent
     </div>
     <div class="cat-right">
       <div class="masonry">
-      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_02/1.jpeg" loading="lazy" alt="毛发碎屑"></div>
+      <div class="m-item key reveal"><span class="badge key">重点参考图</span><img src="ref_assets/sellpoints/row_02/1.jpeg" loading="lazy" alt="毛发碎屑"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_02/2.jpeg" loading="lazy" alt="毛发碎屑"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_02/3.jpeg" loading="lazy" alt="毛发碎屑"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_02/4.jpeg" loading="lazy" alt="毛发碎屑"></div>
@@ -112,7 +115,7 @@ footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.05);text-align:cent
     </div>
     <div class="cat-right">
       <div class="masonry">
-      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_03/1.jpeg" loading="lazy" alt="液体脏污"></div>
+      <div class="m-item key reveal"><span class="badge key">重点参考图</span><img src="ref_assets/sellpoints/row_03/1.jpeg" loading="lazy" alt="液体脏污"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_03/2.jpeg" loading="lazy" alt="液体脏污"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_03/3.jpeg" loading="lazy" alt="液体脏污"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_03/4.jpeg" loading="lazy" alt="液体脏污"></div>
@@ -129,7 +132,7 @@ footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.05);text-align:cent
     </div>
     <div class="cat-right">
       <div class="masonry">
-      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_04/1.jpeg" loading="lazy" alt="宠物"></div>
+      <div class="m-item key reveal"><span class="badge key">重点参考图</span><img src="ref_assets/sellpoints/row_04/1.jpeg" loading="lazy" alt="宠物"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_04/2.jpeg" loading="lazy" alt="宠物"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_04/3.jpeg" loading="lazy" alt="宠物"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_04/4.jpeg" loading="lazy" alt="宠物"></div>
@@ -143,7 +146,7 @@ footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.05);text-align:cent
     </div>
     <div class="cat-right">
       <div class="masonry">
-      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_05/1.jpeg" loading="lazy" alt="地毯"></div>
+      <div class="m-item key reveal"><span class="badge key">重点参考图</span><img src="ref_assets/sellpoints/row_05/1.jpeg" loading="lazy" alt="地毯"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_05/2.jpeg" loading="lazy" alt="地毯"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_05/3.jpeg" loading="lazy" alt="地毯"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_05/4.jpeg" loading="lazy" alt="地毯"></div>
@@ -165,7 +168,7 @@ footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.05);text-align:cent
     </div>
     <div class="cat-right">
       <div class="masonry">
-      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_06/1.jpeg" loading="lazy" alt="主机"></div>
+      <div class="m-item key reveal"><span class="badge key">重点参考图</span><img src="ref_assets/sellpoints/row_06/1.jpeg" loading="lazy" alt="主机"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_06/2.jpeg" loading="lazy" alt="主机"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_06/3.jpeg" loading="lazy" alt="主机"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_06/4.jpeg" loading="lazy" alt="主机"></div>
@@ -184,7 +187,7 @@ footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.05);text-align:cent
     </div>
     <div class="cat-right">
       <div class="masonry">
-      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_07/1.jpeg" loading="lazy" alt="基站"></div>
+      <div class="m-item key reveal"><span class="badge key">重点参考图</span><img src="ref_assets/sellpoints/row_07/1.jpeg" loading="lazy" alt="基站"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_07/2.jpeg" loading="lazy" alt="基站"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_07/3.jpeg" loading="lazy" alt="基站"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_07/4.jpeg" loading="lazy" alt="基站"></div>
@@ -203,7 +206,7 @@ footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.05);text-align:cent
     </div>
     <div class="cat-right">
       <div class="masonry">
-      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_08/1.jpeg" loading="lazy" alt="双圆盘"></div>
+      <div class="m-item key reveal"><span class="badge key">重点参考图</span><img src="ref_assets/sellpoints/row_08/1.jpeg" loading="lazy" alt="双圆盘"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_08/2.jpeg" loading="lazy" alt="双圆盘"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_08/3.jpeg" loading="lazy" alt="双圆盘"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_08/4.jpeg" loading="lazy" alt="双圆盘"></div>
@@ -220,7 +223,7 @@ footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.05);text-align:cent
     </div>
     <div class="cat-right">
       <div class="masonry">
-      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_09/1.jpeg" loading="lazy" alt="滚筒履带"></div>
+      <div class="m-item key reveal"><span class="badge key">重点参考图</span><img src="ref_assets/sellpoints/row_09/1.jpeg" loading="lazy" alt="滚筒履带"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_09/2.jpeg" loading="lazy" alt="滚筒履带"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_09/3.jpeg" loading="lazy" alt="滚筒履带"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_09/4.jpeg" loading="lazy" alt="滚筒履带"></div>
@@ -235,7 +238,7 @@ footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.05);text-align:cent
     </div>
     <div class="cat-right">
       <div class="masonry">
-      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_10/1.jpeg" loading="lazy" alt="滚刷"></div>
+      <div class="m-item key reveal"><span class="badge key">重点参考图</span><img src="ref_assets/sellpoints/row_10/1.jpeg" loading="lazy" alt="滚刷"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_10/2.jpeg" loading="lazy" alt="滚刷"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_10/3.jpeg" loading="lazy" alt="滚刷"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_10/4.jpeg" loading="lazy" alt="滚刷"></div>
@@ -251,7 +254,7 @@ footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.05);text-align:cent
     </div>
     <div class="cat-right">
       <div class="masonry">
-      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_11/1.jpeg" loading="lazy" alt="边刷"></div>
+      <div class="m-item key reveal"><span class="badge key">重点参考图</span><img src="ref_assets/sellpoints/row_11/1.jpeg" loading="lazy" alt="边刷"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_11/2.jpeg" loading="lazy" alt="边刷"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_11/3.jpeg" loading="lazy" alt="边刷"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_11/4.jpeg" loading="lazy" alt="边刷"></div>
@@ -268,7 +271,7 @@ footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.05);text-align:cent
     </div>
     <div class="cat-right">
       <div class="masonry">
-      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_12/1.jpeg" loading="lazy" alt="全能基站透显"></div>
+      <div class="m-item key reveal"><span class="badge key">重点参考图</span><img src="ref_assets/sellpoints/row_12/1.jpeg" loading="lazy" alt="全能基站透显"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_12/2.jpeg" loading="lazy" alt="全能基站透显"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_12/3.jpeg" loading="lazy" alt="全能基站透显"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_12/4.jpeg" loading="lazy" alt="全能基站透显"></div>
@@ -288,7 +291,7 @@ footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.05);text-align:cent
     </div>
     <div class="cat-right">
       <div class="masonry">
-      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_13/1.jpeg" loading="lazy" alt="机器光影"></div>
+      <div class="m-item key reveal"><span class="badge key">重点参考图</span><img src="ref_assets/sellpoints/row_13/1.jpeg" loading="lazy" alt="机器光影"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_13/2.jpeg" loading="lazy" alt="机器光影"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_13/3.jpeg" loading="lazy" alt="机器光影"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_13/4.jpeg" loading="lazy" alt="机器光影"></div>
@@ -305,7 +308,7 @@ footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.05);text-align:cent
     </div>
     <div class="cat-right">
       <div class="masonry">
-      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_14/1.jpeg" loading="lazy" alt="环境光影"></div>
+      <div class="m-item key reveal"><span class="badge key">重点参考图</span><img src="ref_assets/sellpoints/row_14/1.jpeg" loading="lazy" alt="环境光影"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_14/2.jpeg" loading="lazy" alt="环境光影"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_14/3.jpeg" loading="lazy" alt="环境光影"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_14/4.jpeg" loading="lazy" alt="环境光影"></div>
@@ -322,7 +325,7 @@ footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.05);text-align:cent
     </div>
     <div class="cat-right">
       <div class="masonry">
-      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_15/1.jpeg" loading="lazy" alt="投影"></div>
+      <div class="m-item key reveal"><span class="badge key">重点参考图</span><img src="ref_assets/sellpoints/row_15/1.jpeg" loading="lazy" alt="投影"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_15/2.jpeg" loading="lazy" alt="投影"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_15/3.jpeg" loading="lazy" alt="投影"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_15/4.jpeg" loading="lazy" alt="投影"></div>
@@ -337,7 +340,7 @@ footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.05);text-align:cent
     </div>
     <div class="cat-right">
       <div class="masonry">
-      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_16/1.jpeg" loading="lazy" alt="激光"></div>
+      <div class="m-item key reveal"><span class="badge key">重点参考图</span><img src="ref_assets/sellpoints/row_16/1.jpeg" loading="lazy" alt="激光"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_16/2.jpeg" loading="lazy" alt="激光"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_16/3.jpeg" loading="lazy" alt="激光"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_16/4.jpeg" loading="lazy" alt="激光"></div>
@@ -355,7 +358,7 @@ footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.05);text-align:cent
     </div>
     <div class="cat-right">
       <div class="masonry">
-      <div class="m-item reveal"><img src="ref_assets/sellpoints/row_17/1.jpeg" loading="lazy" alt="场景参考"></div>
+      <div class="m-item key reveal"><span class="badge key">重点参考图</span><img src="ref_assets/sellpoints/row_17/1.jpeg" loading="lazy" alt="场景参考"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_17/2.jpeg" loading="lazy" alt="场景参考"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_17/3.jpeg" loading="lazy" alt="场景参考"></div>
       <div class="m-item reveal"><img src="ref_assets/sellpoints/row_17/4.jpeg" loading="lazy" alt="场景参考"></div>
